@@ -4,7 +4,7 @@ description: Portal de Cursos • Licenciatura y Maestría • Periodo Primavera
 
 # El tema de Jekyll que usará GitHub Pages
 # Puedes cambiar "jekyll-theme-minimal" por otros como "jekyll-theme-cayman"
-theme: jekyll-theme-cayman
+theme: jekyll-rtd-theme
 
 # Plugins recomendados
 plugins:
