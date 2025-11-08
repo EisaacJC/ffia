@@ -1,2027 +1,951 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Facultad de Física - Portal de Cursos</title>
+    <!-- Cargamos Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Roboto', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: #f5f5f5;
-            color: #212121;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0;
-        }
-
-        /* Material Design Header */
-        .app-bar {
-            background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
-            color: white;
-            padding: 24px;
-            box-shadow: 0 3px 5px -1px rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .app-bar h1 {
-            font-size: 34px;
-            font-weight: 300;
-            letter-spacing: -0.5px;
-            margin-bottom: 8px;
-        }
-
-        .app-bar .subtitle {
-            font-size: 16px;
-            opacity: 0.87;
-            font-weight: 400;
-        }
-
-        /* Alert Card */
-        .alert-card {
-            background: white;
-            margin: 24px;
-            padding: 16px 24px;
-            border-radius: 8px;
-            border-left: 4px solid #ff9800;
-            box-shadow: 0 2px 1px -1px rgba(0,0,0,0.2), 0 1px 1px 0 rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.12);
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .alert-icon {
-            font-size: 24px;
-            color: #ff9800;
-        }
-
-        .alert-text {
-            flex: 1;
-            color: #424242;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-
-        /* Navigation Tabs */
-        .nav-tabs {
-            background: white;
-            margin: 0 24px;
-            border-radius: 8px;
-            box-shadow: 0 2px 1px -1px rgba(0,0,0,0.2), 0 1px 1px 0 rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.12);
-            display: flex;
-            overflow-x: auto;
-            position: sticky;
-            top: 106px;
-            z-index: 50;
-        }
-
-        .nav-tab {
-            padding: 16px 24px;
-            color: #757575;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            white-space: nowrap;
-        }
-
-        .nav-tab:hover {
-            background: rgba(33, 150, 243, 0.08);
-            color: #2196f3;
-        }
-
+        /* Un pequeño estilo extra para la barra de navegación activa */
         .nav-tab.active {
-            color: #1976d2;
-            border-bottom-color: #1976d2;
+            border-bottom-color: #3b82f6; /* blue-500 */
+            color: #3b82f6;
         }
-
-        .nav-tab.maestria-tab {
-            background: linear-gradient(135deg, rgba(103, 58, 183, 0.1), rgba(103, 58, 183, 0.05));
-            color: #673ab7;
-        }
-
-        .nav-tab.maestria-tab:hover {
-            background: rgba(103, 58, 183, 0.15);
-            color: #5e35b1;
-        }
-
-        .nav-tab.maestria-tab.active {
-            color: #673ab7;
-            border-bottom-color: #673ab7;
-        }
-
-        /* Block Container */
-        .block-container {
-            padding: 24px;
-        }
-
-        .block-header {
-            background: #1976d2;
-            color: white;
-            padding: 16px 24px;
-            border-radius: 8px 8px 0 0;
-            font-size: 20px;
-            font-weight: 500;
-            letter-spacing: 0.15px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .block-header.maestria {
-            background: linear-gradient(135deg, #673ab7 0%, #5e35b1 100%);
-        }
-
-        /* Section Container */
-        .section-container {
-            background: white;
-            margin-bottom: 24px;
-            border-radius: 8px;
-            box-shadow: 0 3px 1px -2px rgba(0,0,0,0.2), 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12);
-            overflow: hidden;
-        }
-
-        .section-header {
-            background: #f5f5f5;
-            padding: 16px 24px;
-            border-left: 4px solid #2196f3;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .section-header h3 {
-            font-size: 18px;
-            font-weight: 500;
-            color: #424242;
-            letter-spacing: 0.1px;
-        }
-
-        .section-badge {
-            background: #2196f3;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 16px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        .section-badge.maestria {
-            background: #673ab7;
-        }
-
-        .section-content {
-            padding: 16px;
-        }
-
-        /* Course Cards */
-        .course-grid {
-            display: grid;
-            gap: 16px;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-        }
-
-        .course-card {
-            background: white;
-            border-radius: 8px;
-            border: 1px solid #e0e0e0;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .course-card:hover {
-            box-shadow: 0 6px 10px -4px rgba(0,0,0,0.2), 0 4px 6px 0 rgba(0,0,0,0.14), 0 2px 8px 0 rgba(0,0,0,0.12);
-            transform: translateY(-2px);
-        }
-
-        .course-card.maestria-card {
-            border-top: 3px solid #673ab7;
-        }
-
-        .course-card-header {
-            padding: 16px;
-            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .course-card.maestria-card .course-card-header {
-            background: linear-gradient(135deg, #f3e5f5 0%, #ede7f6 100%);
-        }
-
-        .course-title {
-            font-size: 16px;
-            font-weight: 500;
-            color: #212121;
-            margin-bottom: 4px;
-        }
-
-        .course-professor {
-            font-size: 14px;
-            color: #616161;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .course-card-body {
-            padding: 16px;
-        }
-
-        .course-schedule {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .schedule-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            color: #424242;
-        }
-
-        .schedule-icon {
-            color: #1976d2;
-            font-size: 16px;
-        }
-
-        .maestria-card .schedule-icon {
-            color: #673ab7;
-        }
-
-        .course-location {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            background: #e3f2fd;
-            color: #1976d2;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 500;
-            margin-top: 8px;
-        }
-
-        .maestria-card .course-location {
-            background: #f3e5f5;
-            color: #673ab7;
-        }
-
-        .course-credits {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            background: #fff3e0;
-            color: #f57c00;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 500;
-            margin-top: 8px;
-            margin-left: 8px;
-        }
-
-        .course-card-action {
-            padding: 12px 16px;
-            border-top: 1px solid #e0e0e0;
-            background: #fafafa;
-        }
-
-        .btn-primary {
-            background: #1976d2;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            box-shadow: 0 3px 1px -2px rgba(0,0,0,0.2), 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12);
-        }
-
-        .btn-primary.maestria {
-            background: #673ab7;
-        }
-
-        .btn-primary:hover {
-            background: #1565c0;
-            box-shadow: 0 2px 4px -1px rgba(0,0,0,0.2), 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12);
-        }
-
-        .btn-primary.maestria:hover {
-            background: #5e35b1;
-        }
-
-        .btn-primary:active {
-            box-shadow: 0 5px 5px -3px rgba(0,0,0,0.2), 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12);
-        }
-
-        /* Section II styling */
-        .section-ii .section-header {
-            border-left-color: #f44336;
-        }
-
-        .section-ii .section-badge {
-            background: #f44336;
-        }
-
-        .section-ii .course-location {
-            background: #ffebee;
-            color: #f44336;
-        }
-
-        .section-ii .schedule-icon {
-            color: #f44336;
-        }
-
-        /* Footer */
-        .footer {
-            background: #263238;
-            color: white;
-            padding: 32px 24px;
-            margin-top: 48px;
-            text-align: center;
-        }
-
-        .footer-text {
-            font-size: 14px;
-            opacity: 0.87;
-            line-height: 1.6;
-        }
-
-        /* Scroll to top FAB */
-        .fab {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            width: 56px;
-            height: 56px;
-            background: #ff5722;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 3px 5px -1px rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-decoration: none;
-            z-index: 1000;
-        }
-
-        .fab:hover {
-            box-shadow: 0 5px 5px -3px rgba(0,0,0,0.2), 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12);
-            transform: scale(1.1);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .course-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .nav-tabs {
-                margin: 0 16px;
-            }
-            
-            .block-container {
-                padding: 16px;
-            }
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .course-card {
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-
-        .course-card:nth-child(1) { animation-delay: 0.1s; }
-        .course-card:nth-child(2) { animation-delay: 0.2s; }
-        .course-card:nth-child(3) { animation-delay: 0.3s; }
-        .course-card:nth-child(4) { animation-delay: 0.4s; }
-        .course-card:nth-child(5) { animation-delay: 0.5s; }
-        .course-card:nth-child(6) { animation-delay: 0.6s; }
     </style>
 </head>
-<body>
-    <div class="container">
-        <!-- App Bar -->
-        <header class="app-bar">
-            <h1>Facultad de Física</h1>
-            <div class="subtitle">Portal de Cursos • Licenciatura y Maestría • Periodo Primavera 2025</div>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+
+    <div class="max-w-7xl mx-auto">
+
+        <!-- Encabezado Fijo -->
+        <header class="sticky top-0 z-50 w-full bg-gradient-to-r from-blue-700 to-blue-800 text-white p-6 shadow-lg">
+            <h1 class="text-3xl font-light">Facultad de Física</h1>
+            <p class="text-base opacity-90">Portal de Cursos • Licenciatura y Maestría • Periodo Primavera 2025</p>
         </header>
 
-        <!-- Alert -->
-        <div class="alert-card">
-            <span class="alert-icon">⚠️</span>
-            <div class="alert-text">
-                <strong>Información importante:</strong> Has sido agregado automáticamente a los canales privados correspondientes. 
-                Para problemas de acceso, contacta a un administrador del equipo.
+        <!-- Alerta -->
+        <div class="m-4 md:m-6 p-4 bg-white shadow-md rounded-lg border-l-4 border-yellow-500 flex items-center">
+            <span class="text-2xl mr-4">⚠️</span>
+            <div class="text-gray-800">
+                <strong class="font-bold">Información importante:</strong> Has sido agregado automáticamente a los canales privados correspondientes. Para problemas de acceso, contacta a un administrador del equipo.
             </div>
         </div>
 
-        <!-- Navigation -->
-        <nav class="nav-tabs">
-            <a href="#bloque1" class="nav-tab active">Bloque I</a>
-            <a href="#bloque3" class="nav-tab">Bloque III</a>
-            <a href="#bloque5" class="nav-tab">Bloque V</a>
-            <a href="#bloque7" class="nav-tab">Bloque VII</a>
-            <a href="#maestria" class="nav-tab maestria-tab">🎓 Maestría</a>
+        <!-- Navegación Fija -->
+        <nav id="navbar" class="sticky top-[106px] z-40 bg-white shadow-md mx-4 md:mx-6 rounded-lg flex overflow-x-auto whitespace-nowrap">
+            <a href="#bloque1" class="nav-tab active py-4 px-6 font-medium text-sm text-gray-600 uppercase border-b-4 border-transparent hover:text-blue-500 transition duration-300">Bloque I</a>
+            <a href="#bloque3" class="nav-tab py-4 px-6 font-medium text-sm text-gray-600 uppercase border-b-4 border-transparent hover:text-blue-500 transition duration-300">Bloque III</a>
+            <a href="#bloque5" class="nav-tab py-4 px-6 font-medium text-sm text-gray-600 uppercase border-b-4 border-transparent hover:text-blue-500 transition duration-300">Bloque V</a>
+            <a href="#bloque7" class="nav-tab py-4 px-6 font-medium text-sm text-gray-600 uppercase border-b-4 border-transparent hover:text-blue-500 transition duration-300">Bloque VII</a>
+            <a href="#maestria" class="nav-tab py-4 px-6 font-medium text-sm text-purple-600 uppercase border-b-4 border-transparent hover:text-purple-700 transition duration-300">🎓 Maestría</a>
         </nav>
 
-        <!-- PRIMER BLOQUE -->
-        <div id="bloque1" class="block-container">
-            <div class="section-container">
-                <div class="block-header">
-                    PRIMER BLOQUE
-                </div>
-                
-                <!-- Sección I -->
-                <div class="section-header">
-                    <h3>Sección I</h3>
-                    <span class="section-badge">6 cursos</span>
-                </div>
-                <div class="section-content">
-                    <div class="course-grid">
-                        <div class="course-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Introducción al método científico</div>
-                                <div class="course-professor">
-                                    <span>👩‍🏫</span> Argelia Sol-Haret Báez Barios
-                                </div>
-                            </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Lu 9-11 | Ma 10-12
-                                    </div>
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Mi 9-11, 13:00 | Vi 9-11
-                                    </div>
-                                </div>
-                                <span class="course-location">📍 Salón C1</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
+        <!-- Contenido Principal -->
+        <main class="p-4 md:p-6">
 
-                        <div class="course-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Física conceptual</div>
-                                <div class="course-professor">
-                                    <span>👩‍🏫</span> Patricia Padilla Sosa
+            <!-- =================== -->
+            <!-- BLOQUE I -->
+            <!-- =================== -->
+            <section id="bloque1" class="mb-8">
+                <div class="bg-white rounded-lg shadow-xl overflow-hidden">
+                    <h2 class="text-xl font-semibold text-white bg-blue-700 p-4 shadow-md">PRIMER BLOQUE</h2>
+                    
+                    <!-- Sección I -->
+                    <div class="border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-800 p-4 bg-gray-50 border-l-4 border-blue-500 flex justify-between items-center">
+                            <span>Sección I</span>
+                            <span class="text-xs font-medium bg-blue-500 text-white rounded-full px-3 py-1">6 cursos</span>
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+                            <!-- Card 1.1 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Introducción al método científico</h4>
+                                    <p class="text-sm text-gray-600">👩‍🏫 Argelia Sol-Haret Báez Barios</p>
+                                </div>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu 9-11 | Ma 10-12</p>
+                                    <p>📅 Mi 9-11, 13:00 | Vi 9-11</p>
+                                    <p><span class="inline-block bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón C1</span></p>
+                                </div>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A782091a5188d40d8ac7b1c40d06c0afd%40thread.tacv2/MET1?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Lu 13:00 | Mi 11:00, 13:00
-                                    </div>
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Vi 11:00, 13:00
-                                    </div>
+                            <!-- Card 1.2 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Física conceptual</h4>
+                                    <p class="text-sm text-gray-600">👩‍🏫 Patricia Padilla Sosa</p>
                                 </div>
-                                <span class="course-location">📍 Salón C1</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Geometría analítica</div>
-                                <div class="course-professor">
-                                    <span>👩‍🏫</span> Yenisey del Rocío Ponce de León Villanueva
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu 13:00 | Mi 11:00, 13:00</p>
+                                    <p>📅 Vi 11:00, 13:00</p>
+                                    <p><span class="inline-block bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón C1</span></p>
+                                </div>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3Ae859b714f18b44b4a101ab1fe1fef565%40thread.tacv2/FISCON1?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Lu 15:00 | Ma 9:00-11:00
-                                    </div>
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Mi 15:00 | Ju 9:00-11:00
-                                    </div>
+                             <!-- Card 1.3 -->
+                             <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Geometría analítica</h4>
+                                    <p class="text-sm text-gray-600">👩‍🏫 Yenisey del Rocío Ponce de León Villanueva</p>
                                 </div>
-                                <span class="course-location">📍 Salón C1</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Cálculo diferencial en una variable</div>
-                                <div class="course-professor">
-                                    <span>👨‍🏫</span> Juan Narváez Ramírez
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu 15:00 | Ma 9:00-11:00</p>
+                                    <p>📅 Mi 15:00 | Ju 9:00-11:00</p>
+                                    <p><span class="inline-block bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón C1</span></p>
+                                </div>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3Aab3c539587444b9992552591e41a468f%40thread.tacv2/GEOA1?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Lu 7:00-9:00 | Ju 10:00-12:00
-                                    </div>
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Vi 7:00-9:00
-                                    </div>
+                            <!-- Card 1.4 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Cálculo diferencial en una variable</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Juan Narváez Ramírez</p>
                                 </div>
-                                <span class="course-location">📍 Salón C1</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Álgebra superior</div>
-                                <div class="course-professor">
-                                    <span>👨‍🏫</span> Hugo Ponce Flores
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu 7:00-9:00 | Ju 10:00-12:00</p>
+                                    <p>📅 Vi 7:00-9:00</p>
+                                    <p><span class="inline-block bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón C1</span></p>
+                                </div>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A238eb68e3f5d42b6a71426249a340dbe%40thread.tacv2/CALCDIF1V?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Ma, Mi, Ju 7:00-9:00
-                                    </div>
+                            <!-- Card 1.5 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Álgebra superior</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Hugo Ponce Flores</p>
                                 </div>
-                                <span class="course-location">📍 Salón C1</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Literacidad digital</div>
-                                <div class="course-professor">
-                                    <span>👨‍🏫</span> Fernando Martín Montes González
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Ma, Mi, Ju 7:00-9:00</p>
+                                    <p><span class="inline-block bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón C1</span></p>
+                                </div>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A381f8101d94a4fbcaa42957e768ad6dd%40thread.tacv2/AS1?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Lu 11:00-13:00 | Ma 12:00-14:00
-                                    </div>
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Ju 12:00-14:00
-                                    </div>
+                            <!-- Card 1.6 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Literacidad digital</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Fernando Martín Montes González</p>
                                 </div>
-                                <span class="course-location">📍 Centro de Cómputo</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu 11:00-13:00 | Ma 12:00-14:00</p>
+                                    <p>📅 Ju 12:00-14:00</p>
+                                    <p><span class="inline-block bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">📍 Centro de Cómputo</span></p>
+                                </div>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A6815d665b0c34c938e2d712026012a3a%40thread.tacv2/LITDIG1?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Sección II -->
-                <div class="section-ii">
-                    <div class="section-header">
-                        <h3>Sección II</h3>
-                        <span class="section-badge">6 cursos</span>
-                    </div>
-                    <div class="section-content">
-                        <div class="course-grid">
-                            <div class="course-card">
-                                <div class="course-card-header">
-                                    <div class="course-title">Introducción al método científico</div>
-                                    <div class="course-professor">
-                                        <span>👨‍🏫</span> Antonio Marín Hernández
-                                    </div>
+                    
+                    <!-- Sección II -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 p-4 bg-gray-50 border-l-4 border-red-500 flex justify-between items-center">
+                            <span>Sección II</span>
+                            <span class="text-xs font-medium bg-red-500 text-white rounded-full px-3 py-1">6 cursos</span>
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+                            <!-- Card 2.1 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Introducción al método científico</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Antonio Marín Hernández</p>
                                 </div>
-                                <div class="course-card-body">
-                                    <div class="course-schedule">
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Lu, Mi, Ju 12:00-14:00
-                                        </div>
-                                    </div>
-                                    <span class="course-location">📍 Lab. Mecánica</span>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu, Mi, Ju 12:00-14:00</p>
+                                    <p><span class="inline-block bg-red-100 text-red-700 text-xs font-medium px-2 py-1 rounded-full">📍 Lab. Mecánica</span></p>
                                 </div>
-                                <div class="course-card-action">
-                                    <a href="#" class="btn-primary">
-                                        Ir al canal
-                                        <span>→</span>
-                                    </a>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3Afb6bac63109942ce81be841ec172e65d%40thread.tacv2/MET2?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-
-                            <div class="course-card">
-                                <div class="course-card-header">
-                                    <div class="course-title">Cálculo diferencial en una variable</div>
-                                    <div class="course-professor">
-                                        <span>👩‍🏫</span> Sobeida Itzel Vázquez Chena
-                                    </div>
+                            <!-- Card 2.2 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Cálculo diferencial en una variable</h4>
+                                    <p class="text-sm text-gray-600">👩‍🏫 Sobeida Itzel Vázquez Chena</p>
                                 </div>
-                                <div class="course-card-body">
-                                    <div class="course-schedule">
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Ma 12:00-14:00 | Mi 18:00-20:00
-                                        </div>
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Vi 18:00-20:00
-                                        </div>
-                                    </div>
-                                    <span class="course-location">📍 Salón D1</span>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Ma 12:00-14:00 | Mi 18:00-20:00</p>
+                                    <p>📅 Vi 18:00-20:00</p>
+                                    <p><span class="inline-block bg-red-100 text-red-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón D1</span></p>
                                 </div>
-                                <div class="course-card-action">
-                                    <a href="#" class="btn-primary">
-                                        Ir al canal
-                                        <span>→</span>
-                                    </a>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3Ac12597f92fcb414383120d05999d4eeb%40thread.tacv2/CALCDIF1V2?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-
-                            <div class="course-card">
-                                <div class="course-card-header">
-                                    <div class="course-title">Geometría analítica</div>
-                                    <div class="course-professor">
-                                        <span>👩‍🏫</span> Sobeida Itzel Vázquez Chena
-                                    </div>
+                            <!-- Card 2.3 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Geometría analítica</h4>
+                                    <p class="text-sm text-gray-600">👩‍🏫 Sobeida Itzel Vázquez Chena</p>
                                 </div>
-                                <div class="course-card-body">
-                                    <div class="course-schedule">
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Lu, Ma, Ju 18:00-20:00
-                                        </div>
-                                    </div>
-                                    <span class="course-location">📍 Salón D1</span>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu, Ma, Ju 18:00-20:00</p>
+                                    <p><span class="inline-block bg-red-100 text-red-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón D1</span></p>
                                 </div>
-                                <div class="course-card-action">
-                                    <a href="#" class="btn-primary">
-                                        Ir al canal
-                                        <span>→</span>
-                                    </a>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A2d2d6f1b66a043b0a00f9180f03c14ac%40thread.tacv2/GEOA2?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-
-                            <div class="course-card">
-                                <div class="course-card-header">
-                                    <div class="course-title">Física conceptual</div>
-                                    <div class="course-professor">
-                                        <span>👨‍🏫</span> Gerardo Morales Navarrete
-                                    </div>
+                            <!-- Card 2.4 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Física conceptual</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Gerardo Morales Navarrete</p>
                                 </div>
-                                <div class="course-card-body">
-                                    <div class="course-schedule">
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Ma 16:00-18:00 | Ju 16:00-18:00
-                                        </div>
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Vi 11:00-13:00
-                                        </div>
-                                    </div>
-                                    <span class="course-location">📍 Salón D1</span>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Ma 16:00-18:00 | Ju 16:00-18:00</p>
+                                    <p>📅 Vi 11:00-13:00</p>
+                                    <p><span class="inline-block bg-red-100 text-red-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón D1</span></p>
                                 </div>
-                                <div class="course-card-action">
-                                    <a href="#" class="btn-primary">
-                                        Ir al canal
-                                        <span>→</span>
-                                    </a>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3Ac3720352b24e40929bebd9d22624b575%40thread.tacv2/FISCON2?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-
-                            <div class="course-card">
-                                <div class="course-card-header">
-                                    <div class="course-title">Álgebra superior</div>
-                                    <div class="course-professor">
-                                        <span>👨‍🏫</span> Daniel Gualtiero Mendoza Ramirez
-                                    </div>
+                            <!-- Card 2.5 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Álgebra superior</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Daniel Gualtiero Mendoza Ramirez</p>
                                 </div>
-                                <div class="course-card-body">
-                                    <div class="course-schedule">
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Lu-Ju 15:00-16:00
-                                        </div>
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Vi 14:00-16:00
-                                        </div>
-                                    </div>
-                                    <span class="course-location">📍 Salón D1</span>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu-Ju 15:00-16:00</p>
+                                    <p>📅 Vi 14:00-16:00</p>
+                                    <p><span class="inline-block bg-red-100 text-red-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón D1</span></p>
                                 </div>
-                                <div class="course-card-action">
-                                    <a href="#" class="btn-primary">
-                                        Ir al canal
-                                        <span>→</span>
-                                    </a>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A7532ec0014894f58be20d607e76fe7b8%40thread.tacv2/AS2?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-
-                            <div class="course-card">
-                                <div class="course-card-header">
-                                    <div class="course-title">Literacidad digital</div>
-                                    <div class="course-professor">
-                                        <span>👨‍🏫</span> Fernando Martín Montes González
-                                    </div>
+                            <!-- Card 2.6 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Literacidad digital</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Fernando Martín Montes González</p>
                                 </div>
-                                <div class="course-card-body">
-                                    <div class="course-schedule">
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Lu, Mi, Vi 16:00-18:00
-                                        </div>
-                                    </div>
-                                    <span class="course-location">📍 Centro de Cómputo</span>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu, Mi, Vi 16:00-18:00</p>
+                                    <p><span class="inline-block bg-red-100 text-red-700 text-xs font-medium px-2 py-1 rounded-full">📍 Centro de Cómputo</span></p>
                                 </div>
-                                <div class="course-card-action">
-                                    <a href="#" class="btn-primary">
-                                        Ir al canal
-                                        <span>→</span>
-                                    </a>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A0611c03ff5844ce188dd2fc5b2f35249%40thread.tacv2/LITDIG2?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </section>
 
-        <!-- TERCER BLOQUE -->
-        <div id="bloque3" class="block-container">
-            <div class="section-container">
-                <div class="block-header">
-                    TERCER BLOQUE
-                </div>
-                
-                <!-- Sección I -->
-                <div class="section-header">
-                    <h3>Sección I</h3>
-                    <span class="section-badge">5 cursos</span>
-                </div>
-                <div class="section-content">
-                    <div class="course-grid">
-                        <div class="course-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Calor, ondas y fluidos</div>
-                                <div class="course-professor">
-                                    <span>👨‍🏫</span> Juan Narváez Ramírez
+            <!-- =================== -->
+            <!-- BLOQUE III -->
+            <!-- =================== -->
+            <section id="bloque3" class="mb-8">
+                <div class="bg-white rounded-lg shadow-xl overflow-hidden">
+                    <h2 class="text-xl font-semibold text-white bg-blue-700 p-4 shadow-md">TERCER BLOQUE</h2>
+                    
+                    <!-- Sección I -->
+                    <div class="border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-800 p-4 bg-gray-50 border-l-4 border-blue-500 flex justify-between items-center">
+                            <span>Sección I</span>
+                            <span class="text-xs font-medium bg-blue-500 text-white rounded-full px-3 py-1">5 cursos</span>
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+                            <!-- Card 3.1 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Calor, ondas y fluidos</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Juan Narváez Ramírez</p>
+                                </div>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Ma, Mi, Ju 7:00-9:00</p>
+                                    <p><span class="inline-block bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón D1</span></p>
+                                </div>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A5e8b0923b85a4811a26f64c183f055a9%40thread.tacv2/COF1?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Ma, Mi, Ju 7:00-9:00
-                                    </div>
+                            <!-- Card 3.2 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Laboratorio de calor, ondas y fluidos</h4>
+                                    <p class="text-sm text-gray-600">👩‍🏫 Blanca Azucena Gómez Rodríguez</p>
                                 </div>
-                                <span class="course-location">📍 Salón D1</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Laboratorio de calor, ondas y fluidos</div>
-                                <div class="course-professor">
-                                    <span>👩‍🏫</span> Blanca Azucena Gómez Rodríguez
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Mi, Ju 14:00-17:00</p>
+                                    <p><span class="inline-block bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">📍 Lab. de COF</span></p>
+                                </div>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A4d048c52be0b4290a30443d108fcbc8d%40thread.tacv2/LABCOF1?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Mi, Ju 14:00-17:00
-                                    </div>
+                            <!-- Card 3.3 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Álgebra lineal</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Juan Narváez Ramírez</p>
                                 </div>
-                                <span class="course-location">📍 Lab. de COF</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Álgebra lineal</div>
-                                <div class="course-professor">
-                                    <span>👨‍🏫</span> Juan Narváez Ramírez
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu 11:00-13:00 | Mi 9:00-11:00</p>
+                                    <p>📅 Vi 9:00-11:00</p>
+                                    <p><span class="inline-block bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón D1</span></p>
+                                </div>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A7a2459c7a05242eab83a605778e6213b%40thread.tacv2/AL1?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Lu 11:00-13:00 | Mi 9:00-11:00
-                                    </div>
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Vi 9:00-11:00
-                                    </div>
+                            <!-- Card 3.4 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Cálculo diferencial en varias variables</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Miguel Ángel Cruz Becerra</p>
                                 </div>
-                                <span class="course-location">📍 Salón D1</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Cálculo diferencial en varias variables</div>
-                                <div class="course-professor">
-                                    <span>👨‍🏫</span> Miguel Ángel Cruz Becerra
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu, Ma, Ju 9:00-11:00</p>
+                                    <p><span class="inline-block bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón D1</span></p>
+                                </div>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3Af5bbac87c1464192b66e77a791e7e4e5%40thread.tacv2/CALCDIFV1?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Lu, Ma, Ju 9:00-11:00
-                                    </div>
+                            <!-- Card 3.5 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Análisis vectorial</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Erick Fernando Granados Sánchez</p>
                                 </div>
-                                <span class="course-location">📍 Salón D1</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Análisis vectorial</div>
-                                <div class="course-professor">
-                                    <span>👨‍🏫</span> Erick Fernando Granados Sánchez
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu 7-9 | Ma 11-12 | Mi 7-9</p>
+                                    <p>📅 Ju 11-12 | Vi 7-9</p>
+                                    <p><span class="inline-block bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón D1</span></p>
                                 </div>
-                            </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Lu 7-9 | Ma 11-12 | Mi 7-9
-                                    </div>
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Ju 11-12 | Vi 7-9
-                                    </div>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="#" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
-                                <span class="course-location">📍 Salón D1</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Sección II -->
-                <div class="section-ii">
-                    <div class="section-header">
-                        <h3>Sección II</h3>
-                        <span class="section-badge">5 cursos</span>
-                    </div>
-                    <div class="section-content">
-                        <div class="course-grid">
-                            <div class="course-card">
-                                <div class="course-card-header">
-                                    <div class="course-title">Calor, ondas y fluidos</div>
-                                    <div class="course-professor">
-                                        <span>👨‍🏫</span> Gerardo Morales Navarrete
-                                    </div>
+                    <!-- Sección II -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 p-4 bg-gray-50 border-l-4 border-red-500 flex justify-between items-center">
+                            <span>Sección II</span>
+                            <span class="text-xs font-medium bg-red-500 text-white rounded-full px-3 py-1">5 cursos</span>
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+                            <!-- Card 3.6 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Calor, ondas y fluidos</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Gerardo Morales Navarrete</p>
                                 </div>
-                                <div class="course-card-body">
-                                    <div class="course-schedule">
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Lu 15:00-17:00 | Ma 14:00-16:00
-                                        </div>
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Ju 14:00-16:00
-                                        </div>
-                                    </div>
-                                    <span class="course-location">📍 Salón C1</span>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu 15:00-17:00 | Ma 14:00-16:00</p>
+                                    <p>📅 Ju 14:00-16:00</p>
+                                    <p><span class="inline-block bg-red-100 text-red-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón C1</span></p>
                                 </div>
-                                <div class="course-card-action">
-                                    <a href="#" class="btn-primary">
-                                        Ir al canal
-                                        <span>→</span>
-                                    </a>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3Ab9e94421e7e541de8dad172964e97503%40thread.tacv2/COF2?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-
-                            <div class="course-card">
-                                <div class="course-card-header">
-                                    <div class="course-title">Laboratorio de calor, ondas y fluidos</div>
-                                    <div class="course-professor">
-                                        <span>👩‍🏫</span> Yenisey del Rocío Ponce de León Villanueva
-                                    </div>
+                            <!-- Card 3.7 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Laboratorio de calor, ondas y fluidos</h4>
+                                    <p class="text-sm text-gray-600">👩‍🏫 Yenisey del Rocío Ponce de León Villanueva</p>
                                 </div>
-                                <div class="course-card-body">
-                                    <div class="course-schedule">
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Lu, Mi 10:00-13:00
-                                        </div>
-                                    </div>
-                                    <span class="course-location">📍 Lab. de COF</span>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu, Mi 10:00-13:00</p>
+                                    <p><span class="inline-block bg-red-100 text-red-700 text-xs font-medium px-2 py-1 rounded-full">📍 Lab. de COF</span></p>
                                 </div>
-                                <div class="course-card-action">
-                                    <a href="#" class="btn-primary">
-                                        Ir al canal
-                                        <span>→</span>
-                                    </a>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3Aceddaf6c066746f3bad3ab37425330e0%40thread.tacv2/LABCOF2?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-
-                            <div class="course-card">
-                                <div class="course-card-header">
-                                    <div class="course-title">Álgebra lineal</div>
-                                    <div class="course-professor">
-                                        <span>👨‍🏫</span> Esteban Heredia Muñoz
-                                    </div>
+                            <!-- Card 3.8 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Álgebra lineal</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Esteban Heredia Muñoz</p>
                                 </div>
-                                <div class="course-card-body">
-                                    <div class="course-schedule">
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Ma 16-17 | Mi 15-17 | Ju 16-17
-                                        </div>
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Vi 15-17
-                                        </div>
-                                    </div>
-                                    <span class="course-location">📍 Salón C1</span>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Ma 16-17 | Mi 15-17 | Ju 16-17</p>
+                                    <p>📅 Vi 15-17</p>
+                                    <p><span class="inline-block bg-red-100 text-red-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón C1</span></p>
                                 </div>
-                                <div class="course-card-action">
-                                    <a href="#" class="btn-primary">
-                                        Ir al canal
-                                        <span>→</span>
-                                    </a>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A6dad65d77d464701a637d31fae66ec53%40thread.tacv2/AL2?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-
-                            <div class="course-card">
-                                <div class="course-card-header">
-                                    <div class="course-title">Cálculo diferencial en varias variables</div>
-                                    <div class="course-professor">
-                                        <span>👨‍🏫</span> Gerardo Morales Navarrete
-                                    </div>
+                            <!-- Card 3.9 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Cálculo diferencial en varias variables</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Gerardo Morales Navarrete</p>
                                 </div>
-                                <div class="course-card-body">
-                                    <div class="course-schedule">
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Lu 18-20 | Ma 19-20
-                                        </div>
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Mi 18-20 | Ju 19-20
-                                        </div>
-                                    </div>
-                                    <span class="course-location">📍 Salón C1</span>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu 18-20 | Ma 19-20</p>
+                                    <p>📅 Mi 18-20 | Ju 19-20</p>
+                                    <p><span class="inline-block bg-red-100 text-red-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón C1</span></p>
                                 </div>
-                                <div class="course-card-action">
-                                    <a href="#" class="btn-primary">
-                                        Ir al canal
-                                        <span>→</span>
-                                    </a>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A08293dce6c944ced92c2c25e9c0e8116%40thread.tacv2/CALCDIFV2?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-
-                            <div class="course-card">
-                                <div class="course-card-header">
-                                    <div class="course-title">Análisis vectorial</div>
-                                    <div class="course-professor">
-                                        <span>👨‍🏫</span> Gilberto Aguilar Pérez
-                                    </div>
+                            <!-- Card 3.10 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Análisis vectorial</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Gilberto Aguilar Pérez</p>
                                 </div>
-                                <div class="course-card-body">
-                                    <div class="course-schedule">
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Lu 17-18 | Ma 17-19
-                                        </div>
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Mi 17-18 | Ju 17-19
-                                        </div>
-                                    </div>
-                                    <span class="course-location">📍 Salón C1</span>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu 17-18 | Ma 17-19</p>
+                                    <p>📅 Mi 17-18 | Ju 17-19</p>
+                                    <p><span class="inline-block bg-red-100 text-red-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón C1</span></p>
                                 </div>
-                                <div class="course-card-action">
-                                    <a href="#" class="btn-primary">
-                                        Ir al canal
-                                        <span>→</span>
-                                    </a>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A6fdc5061dfb541be86ba9b1fc0814292%40thread.tacv2/AV1?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </section>
 
-        <!-- QUINTO BLOQUE -->
-        <div id="bloque5" class="block-container">
-            <div class="section-container">
-                <div class="block-header">
-                    QUINTO BLOQUE
-                </div>
-                
-                <!-- Sección I -->
-                <div class="section-header">
-                    <h3>Sección I</h3>
-                    <span class="section-badge">5 cursos</span>
-                </div>
-                <div class="section-content">
-                    <div class="course-grid">
-                        <div class="course-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Fenomenología cuántica y relativista</div>
-                                <div class="course-professor">
-                                    <span>👨‍🏫</span> Miguel Ángel Cruz Becerra
+            <!-- =================== -->
+            <!-- BLOQUE V -->
+            <!-- =================== -->
+            <section id="bloque5" class="mb-8">
+                <div class="bg-white rounded-lg shadow-xl overflow-hidden">
+                    <h2 class="text-xl font-semibold text-white bg-blue-700 p-4 shadow-md">QUINTO BLOQUE</h2>
+                    
+                    <!-- Sección I -->
+                    <div class="border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-800 p-4 bg-gray-50 border-l-4 border-blue-500 flex justify-between items-center">
+                            <span>Sección I</span>
+                            <span class="text-xs font-medium bg-blue-500 text-white rounded-full px-3 py-1">5 cursos</span>
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+                            <!-- Card 5.1 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Fenomenología cuántica y relativista</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Miguel Ángel Cruz Becerra</p>
+                                </div>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu 12:00-14:00 (D1)</p>
+                                    <p>📅 Ma 11:00-13:00 (D4) | Mi 10:00-12:00 (D3)</p>
+                                    <p><span class="inline-block bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">📍 Varios salones</span></p>
+                                </div>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3Ab07a5e7a894f48ec95333c4b69c74a73%40thread.tacv2/FECURE1?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Lu 12:00-14:00 (D1)
-                                    </div>
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Ma 11:00-13:00 (D4) | Mi 10:00-12:00 (D3)
-                                    </div>
+                            <!-- Card 5.2 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Laboratorio de física moderna</h4>
+                                    <p class="text-sm text-gray-600">👩‍🏫 Patricia Padilla Sosa</p>
                                 </div>
-                                <span class="course-location">📍 Varios salones</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Laboratorio de física moderna</div>
-                                <div class="course-professor">
-                                    <span>👩‍🏫</span> Patricia Padilla Sosa
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu, Mi 16:00-19:00</p>
+                                    <p><span class="inline-block bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">📍 Lab. Óptica y Fís. Mod.</span></p>
+                                </div>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3Af7274f0a568149df81f4bea17316ee1e%40thread.tacv2/LABMOD1?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Lu, Mi 16:00-19:00
-                                    </div>
+                            <!-- Card 5.3 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Funciones especiales</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Hugo Ponce Flores</p>
                                 </div>
-                                <span class="course-location">📍 Lab. Óptica y Fís. Mod.</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Funciones especiales</div>
-                                <div class="course-professor">
-                                    <span>👨‍🏫</span> Hugo Ponce Flores
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu 10:00-12:00 | Ma 9:00-11:00</p>
+                                    <p>📅 Ju 9:00-11:00</p>
+                                    <p><span class="inline-block bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón D3</span></p>
+                                </div>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3Aea1c34a3562848d78b428726fa4abbe0%40thread.tacv2/FUNESP1?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Lu 10:00-12:00 | Ma 9:00-11:00
-                                    </div>
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Ju 9:00-11:00
-                                    </div>
+                            <!-- Card 5.4 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Variable compleja</h4>
+                                    <p class="text-sm text-gray-600">👩‍🏫 Yari Juárez López</p>
                                 </div>
-                                <span class="course-location">📍 Salón D3</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Variable compleja</div>
-                                <div class="course-professor">
-                                    <span>👩‍🏫</span> Yari Juárez López
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu 7-8 | Ma 7-9 | Mi 7-8</p>
+                                    <p>📅 Ju 7-9</p>
+                                    <p><span class="inline-block bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón D3</span></p>
+                                </div>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3Abf026e8c808f4f40a1a8d1bc53c01443%40thread.tacv2/VC1?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Lu 7-8 | Ma 7-9 | Mi 7-8
-                                    </div>
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Ju 7-9
-                                    </div>
+                            <!-- Card 5.5 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Óptica</h4>
+                                    <p class="text-sm text-gray-600">👩‍🏫 Patricia Padilla Sosa</p>
                                 </div>
-                                <span class="course-location">📍 Salón D3</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Óptica</div>
-                                <div class="course-professor">
-                                    <span>👩‍🏫</span> Patricia Padilla Sosa
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu, Mi, Vi 8:00-10:00</p>
+                                    <p><span class="inline-block bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón D3</span></p>
                                 </div>
-                            </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Lu, Mi, Vi 8:00-10:00
-                                    </div>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3Ab51f005daec04026a976e5487695de2e%40thread.tacv2/OPTICA1?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
-                                <span class="course-location">📍 Salón D3</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Sección II -->
-                <div class="section-ii">
-                    <div class="section-header">
-                        <h3>Sección II</h3>
-                        <span class="section-badge">5 cursos</span>
-                    </div>
-                    <div class="section-content">
-                        <div class="course-grid">
-                            <div class="course-card">
-                                <div class="course-card-header">
-                                    <div class="course-title">Fenomenología cuántica y relativista</div>
-                                    <div class="course-professor">
-                                        <span>👨‍🏫</span> Emmanuel Isaac Juárez Caballero
-                                    </div>
+                    <!-- Sección II -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 p-4 bg-gray-50 border-l-4 border-red-500 flex justify-between items-center">
+                            <span>Sección II</span>
+                            <span class="text-xs font-medium bg-red-500 text-white rounded-full px-3 py-1">5 cursos</span>
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+                            <!-- Card 5.6 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Fenomenología cuántica y relativista</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Emmanuel Isaac Juárez Caballero</p>
                                 </div>
-                                <div class="course-card-body">
-                                    <div class="course-schedule">
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Lu, Mi, Vi 17:00-19:00
-                                        </div>
-                                    </div>
-                                    <span class="course-location">📍 Salón D3</span>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu, Mi, Vi 17:00-19:00</p>
+                                    <p><span class="inline-block bg-red-100 text-red-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón D3</span></p>
                                 </div>
-                                <div class="course-card-action">
-                                    <a href="#" class="btn-primary">
-                                        Ir al canal
-                                        <span>→</span>
-                                    </a>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3Aff757a951e55435da6c241069ef466dc%40thread.tacv2/FECURE2?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-
-                            <div class="course-card">
-                                <div class="course-card-header">
-                                    <div class="course-title">Laboratorio de física moderna</div>
-                                    <div class="course-professor">
-                                        <span>👩‍🏫</span> Alejandra Tayde Cadillo Martínez
-                                    </div>
+                            <!-- Card 5.7 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Laboratorio de física moderna</h4>
+                                    <p class="text-sm text-gray-600">👩‍🏫 Alejandra Tayde Cadillo Martínez</p>
                                 </div>
-                                <div class="course-card-body">
-                                    <div class="course-schedule">
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Ma, Ju 16:00-19:00
-                                        </div>
-                                    </div>
-                                    <span class="course-location">📍 Lab. Óptica y Fís. Mod.</span>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Ma, Ju 16:00-19:00</p>
+                                    <p><span class="inline-block bg-red-100 text-red-700 text-xs font-medium px-2 py-1 rounded-full">📍 Lab. Óptica y Fís. Mod.</span></p>
                                 </div>
-                                <div class="course-card-action">
-                                    <a href="#" class="btn-primary">
-                                        Ir al canal
-                                        <span>→</span>
-                                    </a>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3Aceddaf6c066746f3bad3ab37425330e0%40thread.tacv2/LABCOF2?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-
-                            <div class="course-card">
-                                <div class="course-card-header">
-                                    <div class="course-title">Funciones especiales</div>
-                                    <div class="course-professor">
-                                        <span>👩‍🏫</span> Norma Bagatella Flores
-                                    </div>
+                            <!-- Card 5.8 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Funciones especiales</h4>
+                                    <p class="text-sm text-gray-600">👩‍🏫 Norma Bagatella Flores</p>
                                 </div>
-                                <div class="course-card-body">
-                                    <div class="course-schedule">
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Lu 12-14 | Ma 13-14 | Ju 13-14
-                                        </div>
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Vi 11-13
-                                        </div>
-                                    </div>
-                                    <span class="course-location">📍 Salón D3</span>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu 12-14 | Ma 13-14 | Ju 13-14</p>
+                                    <p>📅 Vi 11-13</p>
+                                    <p><span class="inline-block bg-red-100 text-red-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón D3</span></p>
                                 </div>
-                                <div class="course-card-action">
-                                    <a href="#" class="btn-primary">
-                                        Ir al canal
-                                        <span>→</span>
-                                    </a>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A24079ed84ce0419d8aa86576291e8141%40thread.tacv2/FUNESP2?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-
-                            <div class="course-card">
-                                <div class="course-card-header">
-                                    <div class="course-title">Variable compleja</div>
-                                    <div class="course-professor">
-                                        <span>👨‍🏫</span> Deryan Iván Alvarado Morales
-                                    </div>
+                            <!-- Card 5.9 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Variable compleja</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Deryan Iván Alvarado Morales</p>
                                 </div>
-                                <div class="course-card-body">
-                                    <div class="course-schedule">
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Lu, Mi, Vi 15:00-17:00
-                                        </div>
-                                    </div>
-                                    <span class="course-location">📍 Salón D3</span>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu, Mi, Vi 15:00-17:00</p>
+                                    <p><span class="inline-block bg-red-100 text-red-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón D3</span></p>
                                 </div>
-                                <div class="course-card-action">
-                                    <a href="#" class="btn-primary">
-                                        Ir al canal
-                                        <span>→</span>
-                                    </a>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A7a929b6117f14950a1bdd83692e25eee%40thread.tacv2/VC2?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-
-                            <div class="course-card">
-                                <div class="course-card-header">
-                                    <div class="course-title">Óptica</div>
-                                    <div class="course-professor">
-                                        <span>👨‍🏫</span> Héctor Hugo Cerecedo Nuñez
-                                    </div>
+                            <!-- Card 5.10 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Óptica</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Héctor Hugo Cerecedo Nuñez</p>
                                 </div>
-                                <div class="course-card-body">
-                                    <div class="course-schedule">
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Ma 11:00-13:00 | Mi 12:00-14:00
-                                        </div>
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Ju 11:00-13:00
-                                        </div>
-                                    </div>
-                                    <span class="course-location">📍 Salón D3</span>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Ma 11:00-13:00 | Mi 12:00-14:00</p>
+                                    <p>📅 Ju 11:00-13:00</p>
+                                    <p><span class="inline-block bg-red-100 text-red-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón D3</span></p>
                                 </div>
-                                <div class="course-card-action">
-                                    <a href="#" class="btn-primary">
-                                        Ir al canal
-                                        <span>→</span>
-                                    </a>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3Af53fe81d85084d8aa3df6dbbc3080bd8%40thread.tacv2/OPTICA2?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </section>
 
-        <!-- SÉPTIMO BLOQUE -->
-        <div id="bloque7" class="block-container">
-            <div class="section-container">
-                <div class="block-header">
-                    SÉPTIMO BLOQUE
-                </div>
-                
-                <!-- Sección I -->
-                <div class="section-header">
-                    <h3>Sección I</h3>
-                    <span class="section-badge">5 cursos</span>
-                </div>
-                <div class="section-content">
-                    <div class="course-grid">
-                        <div class="course-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Electrodinámica</div>
-                                <div class="course-professor">
-                                    <span>👨‍🏫</span> Profesor por asignar
+            <!-- =================== -->
+            <!-- BLOQUE VII -->
+            <!-- =================== -->
+            <section id="bloque7" class="mb-8">
+                <div class="bg-white rounded-lg shadow-xl overflow-hidden">
+                    <h2 class="text-xl font-semibold text-white bg-blue-700 p-4 shadow-md">SÉPTIMO BLOQUE</h2>
+                    
+                    <!-- Sección I -->
+                    <div class="border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-800 p-4 bg-gray-50 border-l-4 border-blue-500 flex justify-between items-center">
+                            <span>Sección I</span>
+                            <span class="text-xs font-medium bg-blue-500 text-white rounded-full px-3 py-1">5 cursos</span>
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+                            <!-- Card 7.1 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Electrodinámica</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Profesor por asignar</p>
+                                </div>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu, Mi, Vi 7:00-9:00</p>
+                                    <p><span class="inline-block bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón D4</span></p>
+                                </div>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="#" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Lu, Mi, Vi 7:00-9:00
-                                    </div>
+                            <!-- Card 7.2 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Mecánica cuántica</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Sergio Adrián Lerma Hernández</p>
                                 </div>
-                                <span class="course-location">📍 Salón D4</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Mecánica cuántica</div>
-                                <div class="course-professor">
-                                    <span>👨‍🏫</span> Sergio Adrián Lerma Hernández
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu, Mi, Vi 9:00-11:00</p>
+                                    <p><span class="inline-block bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón D4</span></p>
+                                </div>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A0afe58c865e24560809d8e793c34407d%40thread.tacv2/MC1?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Lu, Mi, Vi 9:00-11:00
-                                    </div>
+                            <!-- Card 7.3 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Física estadística</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Giovany Cruz Huérfano</p>
                                 </div>
-                                <span class="course-location">📍 Salón D4</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Física estadística</div>
-                                <div class="course-professor">
-                                    <span>👨‍🏫</span> Giovany Cruz Huérfano
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu 12:00-14:00 | Ma 9:00-11:00</p>
+                                    <p>📅 Ju 9:00-11:00</p>
+                                    <p><span class="inline-block bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón D4</span></p>
+                                </div>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A7133e1e02e9046a8b01b77537e51e37b%40thread.tacv2/FISEST1?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Lu 12:00-14:00 | Ma 9:00-11:00
-                                    </div>
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Ju 9:00-11:00
-                                    </div>
+                            <!-- Card 7.4 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Tópicos terminales I (Mecánica lagrangiana)</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Cuauhtemoc Campuzano Vargas</p>
                                 </div>
-                                <span class="course-location">📍 Salón D4</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Tópicos terminales I (Mecánica lagrangiana)</div>
-                                <div class="course-professor">
-                                    <span>👨‍🏫</span> Cuauhtemoc Campuzano Vargas
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu 11:00-12:00 | Mi 11:00-13:00</p>
+                                    <p>📅 Vi 11:00-13:00</p>
+                                    <p><span class="inline-block bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón D4</span></p>
+                                </div>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A771f96f7ec084fe2a8606e7d81bb9a04%40thread.tacv2/MECHAM?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Lu 11:00-12:00 | Mi 11:00-13:00
-                                    </div>
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Vi 11:00-13:00
-                                    </div>
+                            <!-- Card 7.5 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Tópicos terminales I (Diseño de experimentos)</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Adrián Arturo Huerta Hernández</p>
                                 </div>
-                                <span class="course-location">📍 Salón D4</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Tópicos terminales I (Diseño de experimentos)</div>
-                                <div class="course-professor">
-                                    <span>👨‍🏫</span> Adrián Arturo Huerta Hernández
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Ma 11:00-13:00 | Ju 11:00-14:00</p>
+                                    <p><span class="inline-block bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">📍 Lab. Óptica y Fís. Mod.</span></p>
                                 </div>
-                            </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Ma 11:00-13:00 | Ju 11:00-14:00
-                                    </div>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A1cf29474941d4805ad7722c561ce0b7d%40thread.tacv2/DISEXP?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
-                                <span class="course-location">📍 Lab. Óptica y Fís. Mod.</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Sección II -->
-                <div class="section-ii">
-                    <div class="section-header">
-                        <h3>Sección II</h3>
-                        <span class="section-badge">5 cursos</span>
-                    </div>
-                    <div class="section-content">
-                        <div class="course-grid">
-                            <div class="course-card">
-                                <div class="course-card-header">
-                                    <div class="course-title">Electrodinámica</div>
-                                    <div class="course-professor">
-                                        <span>👨‍🏫</span> Juan Efraín Rojas Marcial
-                                    </div>
+                    <!-- Sección II -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 p-4 bg-gray-50 border-l-4 border-red-500 flex justify-between items-center">
+                            <span>Sección II</span>
+                            <span class="text-xs font-medium bg-red-500 text-white rounded-full px-3 py-1">5 cursos</span>
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+                            <!-- Card 7.6 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Electrodinámica</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Juan Efraín Rojas Marcial</p>
                                 </div>
-                                <div class="course-card-body">
-                                    <div class="course-schedule">
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Lu 12:00-14:00 | Ma 9:00-11:00
-                                        </div>
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Ju 9:00-11:00
-                                        </div>
-                                    </div>
-                                    <span class="course-location">📍 Salón C7</span>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu 12:00-14:00 | Ma 9:00-11:00</p>
+                                    <p>📅 Ju 9:00-11:00</p>
+                                    <p><span class="inline-block bg-red-100 text-red-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón C7</span></p>
                                 </div>
-                                <div class="course-card-action">
-                                    <a href="#" class="btn-primary">
-                                        Ir al canal
-                                        <span>→</span>
-                                    </a>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3Ae9af6c2bf94b4838aa0004d74c8bc99c%40thread.tacv2/ELECTRO2?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-
-                            <div class="course-card">
-                                <div class="course-card-header">
-                                    <div class="course-title">Mecánica cuántica</div>
-                                    <div class="course-professor">
-                                        <span>👨‍🏫</span> Julio Alberto Méndez Zavaleta
-                                    </div>
+                            <!-- Card 7.7 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Mecánica cuántica</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Julio Alberto Méndez Zavaleta</p>
                                 </div>
-                                <div class="course-card-body">
-                                    <div class="course-schedule">
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Lu, Mi, Vi 7:00-9:00
-                                        </div>
-                                    </div>
-                                    <span class="course-location">📍 Salón C7</span>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu, Mi, Vi 7:00-9:00</p>
+                                    <p><span class="inline-block bg-red-100 text-red-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón C7</span></p>
                                 </div>
-                                <div class="course-card-action">
-                                    <a href="#" class="btn-primary">
-                                        Ir al canal
-                                        <span>→</span>
-                                    </a>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A9052f0e0124a4335b800d82d98c7748d%40thread.tacv2/MC2?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-
-                            <div class="course-card">
-                                <div class="course-card-header">
-                                    <div class="course-title">Física estadística</div>
-                                    <div class="course-professor">
-                                        <span>👩‍🏫</span> Norma Bagatella Flores
-                                    </div>
+                            <!-- Card 7.8 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Física estadística</h4>
+                                    <p class="text-sm text-gray-600">👩‍🏫 Norma Bagatella Flores</p>
                                 </div>
-                                <div class="course-card-body">
-                                    <div class="course-schedule">
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Lu, Mi, Vi 9:00-11:00
-                                        </div>
-                                    </div>
-                                    <span class="course-location">📍 Salón C7</span>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu, Mi, Vi 9:00-11:00</p>
+                                    <p><span class="inline-block bg-red-100 text-red-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón C7</span></p>
                                 </div>
-                                <div class="course-card-action">
-                                    <a href="#" class="btn-primary">
-                                        Ir al canal
-                                        <span>→</span>
-                                    </a>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3Ac7b20c2d9f7f4bf7a115643d408e389c%40thread.tacv2/FISEST2?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-
-                            <div class="course-card">
-                                <div class="course-card-header">
-                                    <div class="course-title">Tópicos terminales I (Mecánica lagrangiana)</div>
-                                    <div class="course-professor">
-                                        <span>👨‍🏫</span> Cuauhtemoc Campuzano Vargas
-                                    </div>
+                            <!-- Card 7.9 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Tópicos terminales I (Mecánica lagrangiana)</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Cuauhtemoc Campuzano Vargas</p>
                                 </div>
-                                <div class="course-card-body">
-                                    <div class="course-schedule">
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Lu 11:00-12:00 | Mi 11:00-13:00
-                                        </div>
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Vi 11:00-13:00
-                                        </div>
-                                    </div>
-                                    <span class="course-location">📍 Salón D4</span>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu 11:00-12:00 | Mi 11:00-13:00</p>
+                                    <p>📅 Vi 11:00-13:00</p>
+                                    <p><span class="inline-block bg-red-100 text-red-700 text-xs font-medium px-2 py-1 rounded-full">📍 Salón D4</span></p>
                                 </div>
-                                <div class="course-card-action">
-                                    <a href="#" class="btn-primary">
-                                        Ir al canal
-                                        <span>→</span>
-                                    </a>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A771f96f7ec084fe2a8606e7d81bb9a04%40thread.tacv2/MECHAM?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-
-                            <div class="course-card">
-                                <div class="course-card-header">
-                                    <div class="course-title">Tópicos terminales I (Diseño de experimentos)</div>
-                                    <div class="course-professor">
-                                        <span>👨‍🏫</span> Adrián Arturo Huerta Hernández
-                                    </div>
+                            <!-- Card 7.10 -->
+                            <div class="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <h4 class="font-bold text-gray-900">Tópicos terminales I (Diseño de experimentos)</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Adrián Arturo Huerta Hernández</p>
                                 </div>
-                                <div class="course-card-body">
-                                    <div class="course-schedule">
-                                        <div class="schedule-item">
-                                            <span class="schedule-icon">📅</span>
-                                            Ma 11:00-13:00 | Ju 11:00-14:00
-                                        </div>
-                                    </div>
-                                    <span class="course-location">📍 Lab. Óptica y Fís. Mod.</span>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Ma 11:00-13:00 | Ju 11:00-14:00</p>
+                                    <p><span class="inline-block bg-red-100 text-red-700 text-xs font-medium px-2 py-1 rounded-full">📍 Lab. Óptica y Fís. Mod.</span></p>
                                 </div>
-                                <div class="course-card-action">
-                                    <a href="#" class="btn-primary">
-                                        Ir al canal
-                                        <span>→</span>
-                                    </a>
+                                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A1cf29474941d4805ad7722c561ce0b7d%40thread.tacv2/DISEXP?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-blue-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </section>
 
-        <!-- MAESTRÍA EN FÍSICA -->
-        <div id="maestria" class="block-container">
-            <div class="section-container">
-                <div class="block-header maestria">
-                    🎓 MAESTRÍA EN FÍSICA
-                </div>
-                
-                <!-- Primer Semestre -->
-                <div class="section-header">
-                    <h3>Primer Semestre</h3>
-                    <span class="section-badge maestria">Cursos básicos</span>
-                </div>
-                <div class="section-content">
-                    <div class="course-grid">
-                        <div class="course-card maestria-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Mecánica Clásica Avanzada</div>
-                                <div class="course-professor">
-                                    <span>👨‍🏫</span> Dr. Por asignar
+            <!-- =================== -->
+            <!-- MAESTRÍA -->
+            <!-- =================== -->
+            <section id="maestria" class="mb-8">
+                <div class="bg-white rounded-lg shadow-xl overflow-hidden">
+                    <h2 class="text-xl font-semibold text-white bg-purple-700 p-4 shadow-md">🎓 MAESTRÍA EN FÍSICA</h2>
+                     <div class="border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-800 p-4 bg-gray-50 border-l-4 border-purple-500">
+                            Cursos Agosto 2025 - Enero 2026
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+                            <!-- Card M.1 -->
+                            <div class="border-2 border-purple-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-purple-50 border-b border-purple-200">
+                                    <h4 class="font-bold text-gray-900">Seminario de investigación I</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Dr. Claudio Contreras Aburto</p>
+                                </div>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Ma 15:00-17:00 | Mi 16:00-17:00</p>
+                                    <p>📅 Ju 15:00-17:00</p>
+                                    <p><span class="inline-block bg-purple-100 text-purple-700 text-xs font-medium px-2 py-1 rounded-full">📍 Maestria</span></p>
+                                </div>
+                                <div class="p-4 bg-gray-50 border-t border-purple-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A075c4c2ef71f497b82f255030becba97%40thread.tacv2/SISTDINAM?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-purple-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-purple-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Lu, Mi 10:00-12:00
-                                    </div>
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Vi 10:00-12:00
-                                    </div>
+                            <!-- Card M.2 -->
+                            <div class="border-2 border-purple-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-purple-50 border-b border-purple-200">
+                                    <h4 class="font-bold text-gray-900">Sistemas dinámicos</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Dr. Claudio Contreras Aburto</p>
                                 </div>
-                                <span class="course-location">📍 Aula de Posgrado</span>
-                                <span class="course-credits">📚 8 créditos</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary maestria">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="course-card maestria-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Electrodinámica Clásica</div>
-                                <div class="course-professor">
-                                    <span>👩‍🏫</span> Dra. Por asignar
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Ma 9:00-11:00 (Aula D2)</p>
+                                    <p>📅 Mi 11:00-12:00 (Aula C7)</p>
+                                    <p>📅 Ju 9:00-11:00 (Aula D2)</p>
+                                    <p><span class="inline-block bg-purple-100 text-purple-700 text-xs font-medium px-2 py-1 rounded-full">📍 Aulas D2 y C7</span></p>
+                                </div>
+                                <div class="p-4 bg-gray-50 border-t border-purple-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A075c4c2ef71f497b82f255030becba97%40thread.tacv2/SISTDINAM?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-purple-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-purple-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Ma, Ju 10:00-12:00
-                                    </div>
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Vi 14:00-16:00
-                                    </div>
+                            <!-- Card M.3 -->
+                            <div class="border-2 border-purple-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-purple-50 border-b border-purple-200">
+                                    <h4 class="font-bold text-gray-900">Mecánica cuántica</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Dr. Sergio Adrián Lerma Hernández</p>
                                 </div>
-                                <span class="course-location">📍 Aula de Posgrado</span>
-                                <span class="course-credits">📚 8 créditos</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary maestria">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="course-card maestria-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Métodos Matemáticos de la Física I</div>
-                                <div class="course-professor">
-                                    <span>👨‍🏫</span> Dr. Por asignar
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu 11:00-12:00 | Mi 12:00-14:00</p>
+                                    <p>📅 Vi 11:00-13:00</p>
+                                    <p><span class="inline-block bg-purple-100 text-purple-700 text-xs font-medium px-2 py-1 rounded-full">📍 C7</span></p>
+                                </div>
+                                <div class="p-4 bg-gray-50 border-t border-purple-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A1e45e09ca7ad44d79a17e45cf1994efc%40thread.tacv2/MECCUANTMAES?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-purple-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-purple-700 transition-colors">Ir al canal →</a>
                                 </div>
                             </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Lu, Mi 14:00-16:00
-                                    </div>
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Ju 14:00-16:00
-                                    </div>
+                            <!-- Card M.4 -->
+                            <div class="border-2 border-purple-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-purple-50 border-b border-purple-200">
+                                    <h4 class="font-bold text-gray-900">Laboratorio</h4>
+                                    <p class="text-sm text-gray-600">👩‍🏫 Dra. Blanca Azucena Gómez Rodríguez, Dr. Héctor Hugo Cerecedo Nuñez</p>
                                 </div>
-                                <span class="course-location">📍 Aula de Posgrado</span>
-                                <span class="course-credits">📚 8 créditos</span>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Lu 16:00-19:00</p>
+                                    <p><span class="inline-block bg-purple-100 text-purple-700 text-xs font-medium px-2 py-1 rounded-full">📍 Laboratorio de Mecánica</span></p>
+                                </div>
+                                <div class="p-4 bg-gray-50 border-t border-purple-200">
+                                    <a href="https://teams.microsoft.com/l/channel/19%3A22d415361dd7416baf8a5d6ee720ac8a%40thread.tacv2/LABOMAES?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-purple-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-purple-700 transition-colors">Ir al canal →</a>
+                                </div>
                             </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary maestria">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
+                            <!-- Card M.5 -->
+                            <div class="border-2 border-purple-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                                <div class="p-4 bg-purple-50 border-b border-purple-200">
+                                    <h4 class="font-bold text-gray-900">Optativa III (Teoría de Norma y Gravitación)</h4>
+                                    <p class="text-sm text-gray-600">👨‍🏫 Dr. Julio Alberto Méndez Zavaleta</p>
+                                </div>
+                                <div class="p-4 text-sm text-gray-700 space-y-2 flex-grow">
+                                    <p>📅 Ma 10:00-13:00</p>
+                                    <p>📅 Ju 12:00-14:00</p>
+                                    <p><span class="inline-block bg-purple-100 text-purple-700 text-xs font-medium px-2 py-1 rounded-full">📍 (No especificado)</span></p>
+                                </div>
+                                <div class="p-4 bg-gray-50 border-t border-purple-200">
+                                    <a href="httpsG://teams.microsoft.com/l/channel/19%3A9f43baf85d424bb790d5645695745062%40thread.tacv2/NORMAyGRAV?groupId=f2fbe54d-b0b1-4b7b-a8ef-af575dec281b&tenantId=3c907651-d8c6-4ca6-a8a4-6a242430e653" class="inline-block bg-purple-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-md hover:bg-purple-700 transition-colors">Ir al canal →</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Segundo Semestre -->
-                <div class="section-header">
-                    <h3>Segundo Semestre</h3>
-                    <span class="section-badge maestria">Cursos avanzados</span>
-                </div>
-                <div class="section-content">
-                    <div class="course-grid">
-                        <div class="course-card maestria-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Mecánica Cuántica Avanzada</div>
-                                <div class="course-professor">
-                                    <span>👨‍🏫</span> Dr. Por asignar
-                                </div>
-                            </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Lu, Mi, Vi 9:00-11:00
-                                    </div>
-                                </div>
-                                <span class="course-location">📍 Aula de Posgrado</span>
-                                <span class="course-credits">📚 10 créditos</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary maestria">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="course-card maestria-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Mecánica Estadística</div>
-                                <div class="course-professor">
-                                    <span>👩‍🏫</span> Dra. Por asignar
-                                </div>
-                            </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Ma, Ju 9:00-11:00
-                                    </div>
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Vi 11:00-13:00
-                                    </div>
-                                </div>
-                                <span class="course-location">📍 Aula de Posgrado</span>
-                                <span class="course-credits">📚 8 créditos</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary maestria">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="course-card maestria-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Métodos Matemáticos de la Física II</div>
-                                <div class="course-professor">
-                                    <span>👨‍🏫</span> Dr. Por asignar
-                                </div>
-                            </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Lu 14:00-16:00 | Mi 14:00-16:00
-                                    </div>
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Vi 14:00-16:00
-                                    </div>
-                                </div>
-                                <span class="course-location">📍 Aula de Posgrado</span>
-                                <span class="course-credits">📚 8 créditos</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary maestria">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Cursos Optativos -->
-                <div class="section-header">
-                    <h3>Cursos Optativos</h3>
-                    <span class="section-badge maestria">Especialización</span>
-                </div>
-                <div class="section-content">
-                    <div class="course-grid">
-                        <div class="course-card maestria-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Física de Altas Energías</div>
-                                <div class="course-professor">
-                                    <span>👨‍🏫</span> Dr. Por asignar
-                                </div>
-                            </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Ma, Ju 16:00-18:00
-                                    </div>
-                                </div>
-                                <span class="course-location">📍 Seminario de Física</span>
-                                <span class="course-credits">📚 6 créditos</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary maestria">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="course-card maestria-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Física de Materia Condensada</div>
-                                <div class="course-professor">
-                                    <span>👩‍🏫</span> Dra. Por asignar
-                                </div>
-                            </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Lu, Mi 16:00-18:00
-                                    </div>
-                                </div>
-                                <span class="course-location">📍 Seminario de Física</span>
-                                <span class="course-credits">📚 6 créditos</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary maestria">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="course-card maestria-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Óptica Cuántica</div>
-                                <div class="course-professor">
-                                    <span>👨‍🏫</span> Dr. Por asignar
-                                </div>
-                            </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Vi 16:00-19:00
-                                    </div>
-                                </div>
-                                <span class="course-location">📍 Seminario de Física</span>
-                                <span class="course-credits">📚 6 créditos</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary maestria">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="course-card maestria-card">
-                            <div class="course-card-header">
-                                <div class="course-title">Seminario de Investigación I</div>
-                                <div class="course-professor">
-                                    <span>👥</span> Varios profesores
-                                </div>
-                            </div>
-                            <div class="course-card-body">
-                                <div class="course-schedule">
-                                    <div class="schedule-item">
-                                        <span class="schedule-icon">📅</span>
-                                        Ju 18:00-20:00
-                                    </div>
-                                </div>
-                                <span class="course-location">📍 Auditorio</span>
-                                <span class="course-credits">📚 4 créditos</span>
-                            </div>
-                            <div class="course-card-action">
-                                <a href="#" class="btn-primary maestria">
-                                    Ir al canal
-                                    <span>→</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+            </section>
+            
+        </main>
 
         <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-text">
-                Los enlaces se actualizarán conforme se obtengan los vínculos de cada canal.<br>
-                Facultad de Física - Universidad Veracruzana<br>
-                Programas de Licenciatura y Maestría<br>
+        <footer class="bg-gray-800 text-white text-center p-8 mt-8 rounded-t-lg">
+            <p class="text-sm opacity-80 leading-relaxed">
+                Los enlaces se actualizarán conforme se obtengan los vínculos de cada canal.<br />
+                Facultad de Física - Universidad Veracruzana<br />
+                Programas de Licenciatura y Maestría<br />
                 Última actualización: Enero 2025
-            </div>
+            </p>
         </footer>
 
-        <!-- Floating Action Button -->
-        <a href="#" class="fab" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
-            ↑
-        </a>
     </div>
 
+    <!-- Botón Flotante para subir -->
+    <a href="#" id="fab" class="fixed bottom-6 right-6 bg-blue-600 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg text-2xl hover:bg-blue-700 transition-all duration-300 opacity-0 transform translate-y-2" style="display: none;">
+        ↑
+    </a>
+
+    <!-- JavaScript para la navegación y el botón flotante -->
     <script>
-        // Tab navigation
-        document.querySelectorAll('.nav-tab').forEach(tab => {
-            tab.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Remove active class from all tabs
-                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-                
-                // Add active class to clicked tab
-                this.classList.add('active');
-                
-                // Smooth scroll to section
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // ----- Botón Flotante (FAB) -----
+            const fab = document.getElementById('fab');
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    fab.style.display = 'flex'; // Mostrar
+                    fab.classList.remove('opacity-0', 'translate-y-2');
+                    fab.classList.add('opacity-100', 'translate-y-0');
+                } else {
+                    fab.classList.add('opacity-0', 'translate-y-2');
+                    fab.classList.remove('opacity-100', 'translate-y-0');
+                    // Ocultar después de la transición
+                    setTimeout(() => {
+                        if (window.pageYOffset <= 300) {
+                             fab.style.display = 'none';
+                        }
+                    }, 300);
                 }
             });
-        });
+            fab.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
 
-        // Show/hide FAB based on scroll position
-        window.addEventListener('scroll', function() {
-            const fab = document.querySelector('.fab');
-            if (window.pageYOffset > 300) {
-                fab.style.display = 'flex';
-            } else {
-                fab.style.display = 'none';
-            }
+            // ----- Navegación Activa (Tabs) -----
+            const navTabs = document.querySelectorAll('.nav-tab');
+            const sections = document.querySelectorAll('section[id]'); // Asegurarse de que solo selecciona secciones con ID
+            const navBar = document.getElementById('navbar');
+            const header = document.querySelector('header');
+            const navBarHeight = navBar.offsetHeight + header.offsetHeight + 20; // Ajuste para los elementos fijos
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - navBarHeight) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navTabs.forEach(tab => {
+                    tab.classList.remove('active');
+                    if (tab.getAttribute('href') === '#' + current) {
+                        tab.classList.add('active');
+                    }
+                });
+            });
+
+            // ----- Smooth Scroll para Tabs -----
+            navTabs.forEach(tab => {
+                tab.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const targetPosition = targetElement.offsetTop - (navBarHeight - 60); // Ajuste fino
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
         });
     </script>
 </body>
