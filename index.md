@@ -12,7 +12,7 @@ Portal de Cursos • Licenciatura y Maestría • Periodo Primavera 2025
 
 ---
 
-## PRIMER BLOQUE {:#bloque1}
+## PRIMER BLOQUE 
 
 ### Sección I (6 cursos)
 
@@ -132,7 +132,7 @@ Portal de Cursos • Licenciatura y Maestría • Periodo Primavera 2025
 
 ---
 
-## TERCER BLOQUE {:#bloque3}
+## TERCER BLOQUE 
 
 ### Sección I (5 cursos)
 
@@ -232,7 +232,7 @@ Portal de Cursos • Licenciatura y Maestría • Periodo Primavera 2025
 
 ---
 
-## QUINTO BLOQUE {:#bloque5}
+## QUINTO BLOQUE 
 
 ### Sección I (5 cursos)
 
@@ -331,7 +331,7 @@ Portal de Cursos • Licenciatura y Maestría • Periodo Primavera 2025
 
 ---
 
-## SÉPTIMO BLOQUE {:#bloque7}
+## SÉPTIMO BLOQUE 
 
 ### Sección I (5 cursos)
 
@@ -429,7 +429,7 @@ Portal de Cursos • Licenciatura y Maestría • Periodo Primavera 2025
 
 ---
 
-## 🎓 MAESTRÍA EN FÍSICA {:#maestria}
+## 🎓 MAESTRÍA EN FÍSICA 
 
 ### Cursos Agosto 2025 - Enero 2026
 
