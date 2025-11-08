@@ -1,0 +1,11 @@
+# Título y descripción de tu sitio
+title: Facultad de Física
+description: Portal de Cursos • Licenciatura y Maestría • Periodo Primavera 2025
+
+# El tema de Jekyll que usará GitHub Pages
+# Puedes cambiar "jekyll-theme-minimal" por otros como "jekyll-theme-cayman"
+theme: jekyll-theme-cayman
+
+# Plugins recomendados
+plugins:
+  - jekyll-seo-tag
