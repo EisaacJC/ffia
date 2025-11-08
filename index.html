@@ -1,0 +1,2028 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facultad de Física - Portal de Cursos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #f5f5f5;
+            color: #212121;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        /* Material Design Header */
+        .app-bar {
+            background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+            color: white;
+            padding: 24px;
+            box-shadow: 0 3px 5px -1px rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .app-bar h1 {
+            font-size: 34px;
+            font-weight: 300;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .app-bar .subtitle {
+            font-size: 16px;
+            opacity: 0.87;
+            font-weight: 400;
+        }
+
+        /* Alert Card */
+        .alert-card {
+            background: white;
+            margin: 24px;
+            padding: 16px 24px;
+            border-radius: 8px;
+            border-left: 4px solid #ff9800;
+            box-shadow: 0 2px 1px -1px rgba(0,0,0,0.2), 0 1px 1px 0 rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.12);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .alert-icon {
+            font-size: 24px;
+            color: #ff9800;
+        }
+
+        .alert-text {
+            flex: 1;
+            color: #424242;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            background: white;
+            margin: 0 24px;
+            border-radius: 8px;
+            box-shadow: 0 2px 1px -1px rgba(0,0,0,0.2), 0 1px 1px 0 rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.12);
+            display: flex;
+            overflow-x: auto;
+            position: sticky;
+            top: 106px;
+            z-index: 50;
+        }
+
+        .nav-tab {
+            padding: 16px 24px;
+            color: #757575;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+        }
+
+        .nav-tab:hover {
+            background: rgba(33, 150, 243, 0.08);
+            color: #2196f3;
+        }
+
+        .nav-tab.active {
+            color: #1976d2;
+            border-bottom-color: #1976d2;
+        }
+
+        .nav-tab.maestria-tab {
+            background: linear-gradient(135deg, rgba(103, 58, 183, 0.1), rgba(103, 58, 183, 0.05));
+            color: #673ab7;
+        }
+
+        .nav-tab.maestria-tab:hover {
+            background: rgba(103, 58, 183, 0.15);
+            color: #5e35b1;
+        }
+
+        .nav-tab.maestria-tab.active {
+            color: #673ab7;
+            border-bottom-color: #673ab7;
+        }
+
+        /* Block Container */
+        .block-container {
+            padding: 24px;
+        }
+
+        .block-header {
+            background: #1976d2;
+            color: white;
+            padding: 16px 24px;
+            border-radius: 8px 8px 0 0;
+            font-size: 20px;
+            font-weight: 500;
+            letter-spacing: 0.15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .block-header.maestria {
+            background: linear-gradient(135deg, #673ab7 0%, #5e35b1 100%);
+        }
+
+        /* Section Container */
+        .section-container {
+            background: white;
+            margin-bottom: 24px;
+            border-radius: 8px;
+            box-shadow: 0 3px 1px -2px rgba(0,0,0,0.2), 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: #f5f5f5;
+            padding: 16px 24px;
+            border-left: 4px solid #2196f3;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-header h3 {
+            font-size: 18px;
+            font-weight: 500;
+            color: #424242;
+            letter-spacing: 0.1px;
+        }
+
+        .section-badge {
+            background: #2196f3;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .section-badge.maestria {
+            background: #673ab7;
+        }
+
+        .section-content {
+            padding: 16px;
+        }
+
+        /* Course Cards */
+        .course-grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .course-card:hover {
+            box-shadow: 0 6px 10px -4px rgba(0,0,0,0.2), 0 4px 6px 0 rgba(0,0,0,0.14), 0 2px 8px 0 rgba(0,0,0,0.12);
+            transform: translateY(-2px);
+        }
+
+        .course-card.maestria-card {
+            border-top: 3px solid #673ab7;
+        }
+
+        .course-card-header {
+            padding: 16px;
+            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .course-card.maestria-card .course-card-header {
+            background: linear-gradient(135deg, #f3e5f5 0%, #ede7f6 100%);
+        }
+
+        .course-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #212121;
+            margin-bottom: 4px;
+        }
+
+        .course-professor {
+            font-size: 14px;
+            color: #616161;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .course-card-body {
+            padding: 16px;
+        }
+
+        .course-schedule {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #424242;
+        }
+
+        .schedule-icon {
+            color: #1976d2;
+            font-size: 16px;
+        }
+
+        .maestria-card .schedule-icon {
+            color: #673ab7;
+        }
+
+        .course-location {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-top: 8px;
+        }
+
+        .maestria-card .course-location {
+            background: #f3e5f5;
+            color: #673ab7;
+        }
+
+        .course-credits {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #fff3e0;
+            color: #f57c00;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-top: 8px;
+            margin-left: 8px;
+        }
+
+        .course-card-action {
+            padding: 12px 16px;
+            border-top: 1px solid #e0e0e0;
+            background: #fafafa;
+        }
+
+        .btn-primary {
+            background: #1976d2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            box-shadow: 0 3px 1px -2px rgba(0,0,0,0.2), 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12);
+        }
+
+        .btn-primary.maestria {
+            background: #673ab7;
+        }
+
+        .btn-primary:hover {
+            background: #1565c0;
+            box-shadow: 0 2px 4px -1px rgba(0,0,0,0.2), 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12);
+        }
+
+        .btn-primary.maestria:hover {
+            background: #5e35b1;
+        }
+
+        .btn-primary:active {
+            box-shadow: 0 5px 5px -3px rgba(0,0,0,0.2), 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12);
+        }
+
+        /* Section II styling */
+        .section-ii .section-header {
+            border-left-color: #f44336;
+        }
+
+        .section-ii .section-badge {
+            background: #f44336;
+        }
+
+        .section-ii .course-location {
+            background: #ffebee;
+            color: #f44336;
+        }
+
+        .section-ii .schedule-icon {
+            color: #f44336;
+        }
+
+        /* Footer */
+        .footer {
+            background: #263238;
+            color: white;
+            padding: 32px 24px;
+            margin-top: 48px;
+            text-align: center;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            opacity: 0.87;
+            line-height: 1.6;
+        }
+
+        /* Scroll to top FAB */
+        .fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: #ff5722;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 3px 5px -1px rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            z-index: 1000;
+        }
+
+        .fab:hover {
+            box-shadow: 0 5px 5px -3px rgba(0,0,0,0.2), 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12);
+            transform: scale(1.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .course-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-tabs {
+                margin: 0 16px;
+            }
+            
+            .block-container {
+                padding: 16px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .course-card {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .course-card:nth-child(1) { animation-delay: 0.1s; }
+        .course-card:nth-child(2) { animation-delay: 0.2s; }
+        .course-card:nth-child(3) { animation-delay: 0.3s; }
+        .course-card:nth-child(4) { animation-delay: 0.4s; }
+        .course-card:nth-child(5) { animation-delay: 0.5s; }
+        .course-card:nth-child(6) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- App Bar -->
+        <header class="app-bar">
+            <h1>Facultad de Física</h1>
+            <div class="subtitle">Portal de Cursos • Licenciatura y Maestría • Periodo Primavera 2025</div>
+        </header>
+
+        <!-- Alert -->
+        <div class="alert-card">
+            <span class="alert-icon">⚠️</span>
+            <div class="alert-text">
+                <strong>Información importante:</strong> Has sido agregado automáticamente a los canales privados correspondientes. 
+                Para problemas de acceso, contacta a un administrador del equipo.
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="nav-tabs">
+            <a href="#bloque1" class="nav-tab active">Bloque I</a>
+            <a href="#bloque3" class="nav-tab">Bloque III</a>
+            <a href="#bloque5" class="nav-tab">Bloque V</a>
+            <a href="#bloque7" class="nav-tab">Bloque VII</a>
+            <a href="#maestria" class="nav-tab maestria-tab">🎓 Maestría</a>
+        </nav>
+
+        <!-- PRIMER BLOQUE -->
+        <div id="bloque1" class="block-container">
+            <div class="section-container">
+                <div class="block-header">
+                    PRIMER BLOQUE
+                </div>
+                
+                <!-- Sección I -->
+                <div class="section-header">
+                    <h3>Sección I</h3>
+                    <span class="section-badge">6 cursos</span>
+                </div>
+                <div class="section-content">
+                    <div class="course-grid">
+                        <div class="course-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Introducción al método científico</div>
+                                <div class="course-professor">
+                                    <span>👩‍🏫</span> Argelia Sol-Haret Báez Barios
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Lu 9-11 | Ma 10-12
+                                    </div>
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Mi 9-11, 13:00 | Vi 9-11
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Salón C1</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Física conceptual</div>
+                                <div class="course-professor">
+                                    <span>👩‍🏫</span> Patricia Padilla Sosa
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Lu 13:00 | Mi 11:00, 13:00
+                                    </div>
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Vi 11:00, 13:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Salón C1</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Geometría analítica</div>
+                                <div class="course-professor">
+                                    <span>👩‍🏫</span> Yenisey del Rocío Ponce de León Villanueva
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Lu 15:00 | Ma 9:00-11:00
+                                    </div>
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Mi 15:00 | Ju 9:00-11:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Salón C1</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Cálculo diferencial en una variable</div>
+                                <div class="course-professor">
+                                    <span>👨‍🏫</span> Juan Narváez Ramírez
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Lu 7:00-9:00 | Ju 10:00-12:00
+                                    </div>
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Vi 7:00-9:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Salón C1</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Álgebra superior</div>
+                                <div class="course-professor">
+                                    <span>👨‍🏫</span> Hugo Ponce Flores
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Ma, Mi, Ju 7:00-9:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Salón C1</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Literacidad digital</div>
+                                <div class="course-professor">
+                                    <span>👨‍🏫</span> Fernando Martín Montes González
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Lu 11:00-13:00 | Ma 12:00-14:00
+                                    </div>
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Ju 12:00-14:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Centro de Cómputo</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección II -->
+                <div class="section-ii">
+                    <div class="section-header">
+                        <h3>Sección II</h3>
+                        <span class="section-badge">6 cursos</span>
+                    </div>
+                    <div class="section-content">
+                        <div class="course-grid">
+                            <div class="course-card">
+                                <div class="course-card-header">
+                                    <div class="course-title">Introducción al método científico</div>
+                                    <div class="course-professor">
+                                        <span>👨‍🏫</span> Antonio Marín Hernández
+                                    </div>
+                                </div>
+                                <div class="course-card-body">
+                                    <div class="course-schedule">
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Lu, Mi, Ju 12:00-14:00
+                                        </div>
+                                    </div>
+                                    <span class="course-location">📍 Lab. Mecánica</span>
+                                </div>
+                                <div class="course-card-action">
+                                    <a href="#" class="btn-primary">
+                                        Ir al canal
+                                        <span>→</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-card-header">
+                                    <div class="course-title">Cálculo diferencial en una variable</div>
+                                    <div class="course-professor">
+                                        <span>👩‍🏫</span> Sobeida Itzel Vázquez Chena
+                                    </div>
+                                </div>
+                                <div class="course-card-body">
+                                    <div class="course-schedule">
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Ma 12:00-14:00 | Mi 18:00-20:00
+                                        </div>
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Vi 18:00-20:00
+                                        </div>
+                                    </div>
+                                    <span class="course-location">📍 Salón D1</span>
+                                </div>
+                                <div class="course-card-action">
+                                    <a href="#" class="btn-primary">
+                                        Ir al canal
+                                        <span>→</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-card-header">
+                                    <div class="course-title">Geometría analítica</div>
+                                    <div class="course-professor">
+                                        <span>👩‍🏫</span> Sobeida Itzel Vázquez Chena
+                                    </div>
+                                </div>
+                                <div class="course-card-body">
+                                    <div class="course-schedule">
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Lu, Ma, Ju 18:00-20:00
+                                        </div>
+                                    </div>
+                                    <span class="course-location">📍 Salón D1</span>
+                                </div>
+                                <div class="course-card-action">
+                                    <a href="#" class="btn-primary">
+                                        Ir al canal
+                                        <span>→</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-card-header">
+                                    <div class="course-title">Física conceptual</div>
+                                    <div class="course-professor">
+                                        <span>👨‍🏫</span> Gerardo Morales Navarrete
+                                    </div>
+                                </div>
+                                <div class="course-card-body">
+                                    <div class="course-schedule">
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Ma 16:00-18:00 | Ju 16:00-18:00
+                                        </div>
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Vi 11:00-13:00
+                                        </div>
+                                    </div>
+                                    <span class="course-location">📍 Salón D1</span>
+                                </div>
+                                <div class="course-card-action">
+                                    <a href="#" class="btn-primary">
+                                        Ir al canal
+                                        <span>→</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-card-header">
+                                    <div class="course-title">Álgebra superior</div>
+                                    <div class="course-professor">
+                                        <span>👨‍🏫</span> Daniel Gualtiero Mendoza Ramirez
+                                    </div>
+                                </div>
+                                <div class="course-card-body">
+                                    <div class="course-schedule">
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Lu-Ju 15:00-16:00
+                                        </div>
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Vi 14:00-16:00
+                                        </div>
+                                    </div>
+                                    <span class="course-location">📍 Salón D1</span>
+                                </div>
+                                <div class="course-card-action">
+                                    <a href="#" class="btn-primary">
+                                        Ir al canal
+                                        <span>→</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-card-header">
+                                    <div class="course-title">Literacidad digital</div>
+                                    <div class="course-professor">
+                                        <span>👨‍🏫</span> Fernando Martín Montes González
+                                    </div>
+                                </div>
+                                <div class="course-card-body">
+                                    <div class="course-schedule">
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Lu, Mi, Vi 16:00-18:00
+                                        </div>
+                                    </div>
+                                    <span class="course-location">📍 Centro de Cómputo</span>
+                                </div>
+                                <div class="course-card-action">
+                                    <a href="#" class="btn-primary">
+                                        Ir al canal
+                                        <span>→</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TERCER BLOQUE -->
+        <div id="bloque3" class="block-container">
+            <div class="section-container">
+                <div class="block-header">
+                    TERCER BLOQUE
+                </div>
+                
+                <!-- Sección I -->
+                <div class="section-header">
+                    <h3>Sección I</h3>
+                    <span class="section-badge">5 cursos</span>
+                </div>
+                <div class="section-content">
+                    <div class="course-grid">
+                        <div class="course-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Calor, ondas y fluidos</div>
+                                <div class="course-professor">
+                                    <span>👨‍🏫</span> Juan Narváez Ramírez
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Ma, Mi, Ju 7:00-9:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Salón D1</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Laboratorio de calor, ondas y fluidos</div>
+                                <div class="course-professor">
+                                    <span>👩‍🏫</span> Blanca Azucena Gómez Rodríguez
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Mi, Ju 14:00-17:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Lab. de COF</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Álgebra lineal</div>
+                                <div class="course-professor">
+                                    <span>👨‍🏫</span> Juan Narváez Ramírez
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Lu 11:00-13:00 | Mi 9:00-11:00
+                                    </div>
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Vi 9:00-11:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Salón D1</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Cálculo diferencial en varias variables</div>
+                                <div class="course-professor">
+                                    <span>👨‍🏫</span> Miguel Ángel Cruz Becerra
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Lu, Ma, Ju 9:00-11:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Salón D1</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Análisis vectorial</div>
+                                <div class="course-professor">
+                                    <span>👨‍🏫</span> Erick Fernando Granados Sánchez
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Lu 7-9 | Ma 11-12 | Mi 7-9
+                                    </div>
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Ju 11-12 | Vi 7-9
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Salón D1</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección II -->
+                <div class="section-ii">
+                    <div class="section-header">
+                        <h3>Sección II</h3>
+                        <span class="section-badge">5 cursos</span>
+                    </div>
+                    <div class="section-content">
+                        <div class="course-grid">
+                            <div class="course-card">
+                                <div class="course-card-header">
+                                    <div class="course-title">Calor, ondas y fluidos</div>
+                                    <div class="course-professor">
+                                        <span>👨‍🏫</span> Gerardo Morales Navarrete
+                                    </div>
+                                </div>
+                                <div class="course-card-body">
+                                    <div class="course-schedule">
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Lu 15:00-17:00 | Ma 14:00-16:00
+                                        </div>
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Ju 14:00-16:00
+                                        </div>
+                                    </div>
+                                    <span class="course-location">📍 Salón C1</span>
+                                </div>
+                                <div class="course-card-action">
+                                    <a href="#" class="btn-primary">
+                                        Ir al canal
+                                        <span>→</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-card-header">
+                                    <div class="course-title">Laboratorio de calor, ondas y fluidos</div>
+                                    <div class="course-professor">
+                                        <span>👩‍🏫</span> Yenisey del Rocío Ponce de León Villanueva
+                                    </div>
+                                </div>
+                                <div class="course-card-body">
+                                    <div class="course-schedule">
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Lu, Mi 10:00-13:00
+                                        </div>
+                                    </div>
+                                    <span class="course-location">📍 Lab. de COF</span>
+                                </div>
+                                <div class="course-card-action">
+                                    <a href="#" class="btn-primary">
+                                        Ir al canal
+                                        <span>→</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-card-header">
+                                    <div class="course-title">Álgebra lineal</div>
+                                    <div class="course-professor">
+                                        <span>👨‍🏫</span> Esteban Heredia Muñoz
+                                    </div>
+                                </div>
+                                <div class="course-card-body">
+                                    <div class="course-schedule">
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Ma 16-17 | Mi 15-17 | Ju 16-17
+                                        </div>
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Vi 15-17
+                                        </div>
+                                    </div>
+                                    <span class="course-location">📍 Salón C1</span>
+                                </div>
+                                <div class="course-card-action">
+                                    <a href="#" class="btn-primary">
+                                        Ir al canal
+                                        <span>→</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-card-header">
+                                    <div class="course-title">Cálculo diferencial en varias variables</div>
+                                    <div class="course-professor">
+                                        <span>👨‍🏫</span> Gerardo Morales Navarrete
+                                    </div>
+                                </div>
+                                <div class="course-card-body">
+                                    <div class="course-schedule">
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Lu 18-20 | Ma 19-20
+                                        </div>
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Mi 18-20 | Ju 19-20
+                                        </div>
+                                    </div>
+                                    <span class="course-location">📍 Salón C1</span>
+                                </div>
+                                <div class="course-card-action">
+                                    <a href="#" class="btn-primary">
+                                        Ir al canal
+                                        <span>→</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-card-header">
+                                    <div class="course-title">Análisis vectorial</div>
+                                    <div class="course-professor">
+                                        <span>👨‍🏫</span> Gilberto Aguilar Pérez
+                                    </div>
+                                </div>
+                                <div class="course-card-body">
+                                    <div class="course-schedule">
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Lu 17-18 | Ma 17-19
+                                        </div>
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Mi 17-18 | Ju 17-19
+                                        </div>
+                                    </div>
+                                    <span class="course-location">📍 Salón C1</span>
+                                </div>
+                                <div class="course-card-action">
+                                    <a href="#" class="btn-primary">
+                                        Ir al canal
+                                        <span>→</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- QUINTO BLOQUE -->
+        <div id="bloque5" class="block-container">
+            <div class="section-container">
+                <div class="block-header">
+                    QUINTO BLOQUE
+                </div>
+                
+                <!-- Sección I -->
+                <div class="section-header">
+                    <h3>Sección I</h3>
+                    <span class="section-badge">5 cursos</span>
+                </div>
+                <div class="section-content">
+                    <div class="course-grid">
+                        <div class="course-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Fenomenología cuántica y relativista</div>
+                                <div class="course-professor">
+                                    <span>👨‍🏫</span> Miguel Ángel Cruz Becerra
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Lu 12:00-14:00 (D1)
+                                    </div>
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Ma 11:00-13:00 (D4) | Mi 10:00-12:00 (D3)
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Varios salones</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Laboratorio de física moderna</div>
+                                <div class="course-professor">
+                                    <span>👩‍🏫</span> Patricia Padilla Sosa
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Lu, Mi 16:00-19:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Lab. Óptica y Fís. Mod.</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Funciones especiales</div>
+                                <div class="course-professor">
+                                    <span>👨‍🏫</span> Hugo Ponce Flores
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Lu 10:00-12:00 | Ma 9:00-11:00
+                                    </div>
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Ju 9:00-11:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Salón D3</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Variable compleja</div>
+                                <div class="course-professor">
+                                    <span>👩‍🏫</span> Yari Juárez López
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Lu 7-8 | Ma 7-9 | Mi 7-8
+                                    </div>
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Ju 7-9
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Salón D3</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Óptica</div>
+                                <div class="course-professor">
+                                    <span>👩‍🏫</span> Patricia Padilla Sosa
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Lu, Mi, Vi 8:00-10:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Salón D3</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección II -->
+                <div class="section-ii">
+                    <div class="section-header">
+                        <h3>Sección II</h3>
+                        <span class="section-badge">5 cursos</span>
+                    </div>
+                    <div class="section-content">
+                        <div class="course-grid">
+                            <div class="course-card">
+                                <div class="course-card-header">
+                                    <div class="course-title">Fenomenología cuántica y relativista</div>
+                                    <div class="course-professor">
+                                        <span>👨‍🏫</span> Emmanuel Isaac Juárez Caballero
+                                    </div>
+                                </div>
+                                <div class="course-card-body">
+                                    <div class="course-schedule">
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Lu, Mi, Vi 17:00-19:00
+                                        </div>
+                                    </div>
+                                    <span class="course-location">📍 Salón D3</span>
+                                </div>
+                                <div class="course-card-action">
+                                    <a href="#" class="btn-primary">
+                                        Ir al canal
+                                        <span>→</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-card-header">
+                                    <div class="course-title">Laboratorio de física moderna</div>
+                                    <div class="course-professor">
+                                        <span>👩‍🏫</span> Alejandra Tayde Cadillo Martínez
+                                    </div>
+                                </div>
+                                <div class="course-card-body">
+                                    <div class="course-schedule">
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Ma, Ju 16:00-19:00
+                                        </div>
+                                    </div>
+                                    <span class="course-location">📍 Lab. Óptica y Fís. Mod.</span>
+                                </div>
+                                <div class="course-card-action">
+                                    <a href="#" class="btn-primary">
+                                        Ir al canal
+                                        <span>→</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-card-header">
+                                    <div class="course-title">Funciones especiales</div>
+                                    <div class="course-professor">
+                                        <span>👩‍🏫</span> Norma Bagatella Flores
+                                    </div>
+                                </div>
+                                <div class="course-card-body">
+                                    <div class="course-schedule">
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Lu 12-14 | Ma 13-14 | Ju 13-14
+                                        </div>
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Vi 11-13
+                                        </div>
+                                    </div>
+                                    <span class="course-location">📍 Salón D3</span>
+                                </div>
+                                <div class="course-card-action">
+                                    <a href="#" class="btn-primary">
+                                        Ir al canal
+                                        <span>→</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-card-header">
+                                    <div class="course-title">Variable compleja</div>
+                                    <div class="course-professor">
+                                        <span>👨‍🏫</span> Deryan Iván Alvarado Morales
+                                    </div>
+                                </div>
+                                <div class="course-card-body">
+                                    <div class="course-schedule">
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Lu, Mi, Vi 15:00-17:00
+                                        </div>
+                                    </div>
+                                    <span class="course-location">📍 Salón D3</span>
+                                </div>
+                                <div class="course-card-action">
+                                    <a href="#" class="btn-primary">
+                                        Ir al canal
+                                        <span>→</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-card-header">
+                                    <div class="course-title">Óptica</div>
+                                    <div class="course-professor">
+                                        <span>👨‍🏫</span> Héctor Hugo Cerecedo Nuñez
+                                    </div>
+                                </div>
+                                <div class="course-card-body">
+                                    <div class="course-schedule">
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Ma 11:00-13:00 | Mi 12:00-14:00
+                                        </div>
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Ju 11:00-13:00
+                                        </div>
+                                    </div>
+                                    <span class="course-location">📍 Salón D3</span>
+                                </div>
+                                <div class="course-card-action">
+                                    <a href="#" class="btn-primary">
+                                        Ir al canal
+                                        <span>→</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SÉPTIMO BLOQUE -->
+        <div id="bloque7" class="block-container">
+            <div class="section-container">
+                <div class="block-header">
+                    SÉPTIMO BLOQUE
+                </div>
+                
+                <!-- Sección I -->
+                <div class="section-header">
+                    <h3>Sección I</h3>
+                    <span class="section-badge">5 cursos</span>
+                </div>
+                <div class="section-content">
+                    <div class="course-grid">
+                        <div class="course-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Electrodinámica</div>
+                                <div class="course-professor">
+                                    <span>👨‍🏫</span> Profesor por asignar
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Lu, Mi, Vi 7:00-9:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Salón D4</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Mecánica cuántica</div>
+                                <div class="course-professor">
+                                    <span>👨‍🏫</span> Sergio Adrián Lerma Hernández
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Lu, Mi, Vi 9:00-11:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Salón D4</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Física estadística</div>
+                                <div class="course-professor">
+                                    <span>👨‍🏫</span> Giovany Cruz Huérfano
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Lu 12:00-14:00 | Ma 9:00-11:00
+                                    </div>
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Ju 9:00-11:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Salón D4</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Tópicos terminales I (Mecánica lagrangiana)</div>
+                                <div class="course-professor">
+                                    <span>👨‍🏫</span> Cuauhtemoc Campuzano Vargas
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Lu 11:00-12:00 | Mi 11:00-13:00
+                                    </div>
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Vi 11:00-13:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Salón D4</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Tópicos terminales I (Diseño de experimentos)</div>
+                                <div class="course-professor">
+                                    <span>👨‍🏫</span> Adrián Arturo Huerta Hernández
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Ma 11:00-13:00 | Ju 11:00-14:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Lab. Óptica y Fís. Mod.</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección II -->
+                <div class="section-ii">
+                    <div class="section-header">
+                        <h3>Sección II</h3>
+                        <span class="section-badge">5 cursos</span>
+                    </div>
+                    <div class="section-content">
+                        <div class="course-grid">
+                            <div class="course-card">
+                                <div class="course-card-header">
+                                    <div class="course-title">Electrodinámica</div>
+                                    <div class="course-professor">
+                                        <span>👨‍🏫</span> Juan Efraín Rojas Marcial
+                                    </div>
+                                </div>
+                                <div class="course-card-body">
+                                    <div class="course-schedule">
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Lu 12:00-14:00 | Ma 9:00-11:00
+                                        </div>
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Ju 9:00-11:00
+                                        </div>
+                                    </div>
+                                    <span class="course-location">📍 Salón C7</span>
+                                </div>
+                                <div class="course-card-action">
+                                    <a href="#" class="btn-primary">
+                                        Ir al canal
+                                        <span>→</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-card-header">
+                                    <div class="course-title">Mecánica cuántica</div>
+                                    <div class="course-professor">
+                                        <span>👨‍🏫</span> Julio Alberto Méndez Zavaleta
+                                    </div>
+                                </div>
+                                <div class="course-card-body">
+                                    <div class="course-schedule">
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Lu, Mi, Vi 7:00-9:00
+                                        </div>
+                                    </div>
+                                    <span class="course-location">📍 Salón C7</span>
+                                </div>
+                                <div class="course-card-action">
+                                    <a href="#" class="btn-primary">
+                                        Ir al canal
+                                        <span>→</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-card-header">
+                                    <div class="course-title">Física estadística</div>
+                                    <div class="course-professor">
+                                        <span>👩‍🏫</span> Norma Bagatella Flores
+                                    </div>
+                                </div>
+                                <div class="course-card-body">
+                                    <div class="course-schedule">
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Lu, Mi, Vi 9:00-11:00
+                                        </div>
+                                    </div>
+                                    <span class="course-location">📍 Salón C7</span>
+                                </div>
+                                <div class="course-card-action">
+                                    <a href="#" class="btn-primary">
+                                        Ir al canal
+                                        <span>→</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-card-header">
+                                    <div class="course-title">Tópicos terminales I (Mecánica lagrangiana)</div>
+                                    <div class="course-professor">
+                                        <span>👨‍🏫</span> Cuauhtemoc Campuzano Vargas
+                                    </div>
+                                </div>
+                                <div class="course-card-body">
+                                    <div class="course-schedule">
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Lu 11:00-12:00 | Mi 11:00-13:00
+                                        </div>
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Vi 11:00-13:00
+                                        </div>
+                                    </div>
+                                    <span class="course-location">📍 Salón D4</span>
+                                </div>
+                                <div class="course-card-action">
+                                    <a href="#" class="btn-primary">
+                                        Ir al canal
+                                        <span>→</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-card-header">
+                                    <div class="course-title">Tópicos terminales I (Diseño de experimentos)</div>
+                                    <div class="course-professor">
+                                        <span>👨‍🏫</span> Adrián Arturo Huerta Hernández
+                                    </div>
+                                </div>
+                                <div class="course-card-body">
+                                    <div class="course-schedule">
+                                        <div class="schedule-item">
+                                            <span class="schedule-icon">📅</span>
+                                            Ma 11:00-13:00 | Ju 11:00-14:00
+                                        </div>
+                                    </div>
+                                    <span class="course-location">📍 Lab. Óptica y Fís. Mod.</span>
+                                </div>
+                                <div class="course-card-action">
+                                    <a href="#" class="btn-primary">
+                                        Ir al canal
+                                        <span>→</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAESTRÍA EN FÍSICA -->
+        <div id="maestria" class="block-container">
+            <div class="section-container">
+                <div class="block-header maestria">
+                    🎓 MAESTRÍA EN FÍSICA
+                </div>
+                
+                <!-- Primer Semestre -->
+                <div class="section-header">
+                    <h3>Primer Semestre</h3>
+                    <span class="section-badge maestria">Cursos básicos</span>
+                </div>
+                <div class="section-content">
+                    <div class="course-grid">
+                        <div class="course-card maestria-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Mecánica Clásica Avanzada</div>
+                                <div class="course-professor">
+                                    <span>👨‍🏫</span> Dr. Por asignar
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Lu, Mi 10:00-12:00
+                                    </div>
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Vi 10:00-12:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Aula de Posgrado</span>
+                                <span class="course-credits">📚 8 créditos</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary maestria">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="course-card maestria-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Electrodinámica Clásica</div>
+                                <div class="course-professor">
+                                    <span>👩‍🏫</span> Dra. Por asignar
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Ma, Ju 10:00-12:00
+                                    </div>
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Vi 14:00-16:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Aula de Posgrado</span>
+                                <span class="course-credits">📚 8 créditos</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary maestria">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="course-card maestria-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Métodos Matemáticos de la Física I</div>
+                                <div class="course-professor">
+                                    <span>👨‍🏫</span> Dr. Por asignar
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Lu, Mi 14:00-16:00
+                                    </div>
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Ju 14:00-16:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Aula de Posgrado</span>
+                                <span class="course-credits">📚 8 créditos</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary maestria">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Segundo Semestre -->
+                <div class="section-header">
+                    <h3>Segundo Semestre</h3>
+                    <span class="section-badge maestria">Cursos avanzados</span>
+                </div>
+                <div class="section-content">
+                    <div class="course-grid">
+                        <div class="course-card maestria-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Mecánica Cuántica Avanzada</div>
+                                <div class="course-professor">
+                                    <span>👨‍🏫</span> Dr. Por asignar
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Lu, Mi, Vi 9:00-11:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Aula de Posgrado</span>
+                                <span class="course-credits">📚 10 créditos</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary maestria">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="course-card maestria-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Mecánica Estadística</div>
+                                <div class="course-professor">
+                                    <span>👩‍🏫</span> Dra. Por asignar
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Ma, Ju 9:00-11:00
+                                    </div>
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Vi 11:00-13:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Aula de Posgrado</span>
+                                <span class="course-credits">📚 8 créditos</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary maestria">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="course-card maestria-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Métodos Matemáticos de la Física II</div>
+                                <div class="course-professor">
+                                    <span>👨‍🏫</span> Dr. Por asignar
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Lu 14:00-16:00 | Mi 14:00-16:00
+                                    </div>
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Vi 14:00-16:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Aula de Posgrado</span>
+                                <span class="course-credits">📚 8 créditos</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary maestria">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cursos Optativos -->
+                <div class="section-header">
+                    <h3>Cursos Optativos</h3>
+                    <span class="section-badge maestria">Especialización</span>
+                </div>
+                <div class="section-content">
+                    <div class="course-grid">
+                        <div class="course-card maestria-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Física de Altas Energías</div>
+                                <div class="course-professor">
+                                    <span>👨‍🏫</span> Dr. Por asignar
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Ma, Ju 16:00-18:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Seminario de Física</span>
+                                <span class="course-credits">📚 6 créditos</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary maestria">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="course-card maestria-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Física de Materia Condensada</div>
+                                <div class="course-professor">
+                                    <span>👩‍🏫</span> Dra. Por asignar
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Lu, Mi 16:00-18:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Seminario de Física</span>
+                                <span class="course-credits">📚 6 créditos</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary maestria">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="course-card maestria-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Óptica Cuántica</div>
+                                <div class="course-professor">
+                                    <span>👨‍🏫</span> Dr. Por asignar
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Vi 16:00-19:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Seminario de Física</span>
+                                <span class="course-credits">📚 6 créditos</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary maestria">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="course-card maestria-card">
+                            <div class="course-card-header">
+                                <div class="course-title">Seminario de Investigación I</div>
+                                <div class="course-professor">
+                                    <span>👥</span> Varios profesores
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <div class="course-schedule">
+                                    <div class="schedule-item">
+                                        <span class="schedule-icon">📅</span>
+                                        Ju 18:00-20:00
+                                    </div>
+                                </div>
+                                <span class="course-location">📍 Auditorio</span>
+                                <span class="course-credits">📚 4 créditos</span>
+                            </div>
+                            <div class="course-card-action">
+                                <a href="#" class="btn-primary maestria">
+                                    Ir al canal
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-text">
+                Los enlaces se actualizarán conforme se obtengan los vínculos de cada canal.<br>
+                Facultad de Física - Universidad Veracruzana<br>
+                Programas de Licenciatura y Maestría<br>
+                Última actualización: Enero 2025
+            </div>
+        </footer>
+
+        <!-- Floating Action Button -->
+        <a href="#" class="fab" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+            ↑
+        </a>
+    </div>
+
+    <script>
+        // Tab navigation
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all tabs
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Smooth scroll to section
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Show/hide FAB based on scroll position
+        window.addEventListener('scroll', function() {
+            const fab = document.querySelector('.fab');
+            if (window.pageYOffset > 300) {
+                fab.style.display = 'flex';
+            } else {
+                fab.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
